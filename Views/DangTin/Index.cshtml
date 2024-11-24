@@ -1,0 +1,333 @@
+﻿
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        padding: 20px;
+    }
+
+    .container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+        .form-section h6 {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .form-section label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .image-preview {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+        .image-preview img,
+        .image-preview video {
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .image-preview video {
+            background: #000;
+        }
+
+    .btn-submit {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+            cursor: pointer;
+        }
+
+    .image-preview, .video-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+        .image-preview img,
+        .video-preview video {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+            .image-preview img:hover,
+            .video-preview video:hover {
+                transform: scale(1.1);
+            }
+
+    button {
+        transition: background 0.2s;
+    }
+
+        button:hover {
+            background: darkred;
+        }
+
+</style>
+
+<div class="container">
+    <form>
+        <!-- Hình ảnh và Video -->
+        <div class="form-section">
+            <h6>Hình ảnh và Video sản phẩm</h6>
+            <div>
+                <label for="imageUpload">Tải lên hình ảnh (ít nhất 1 ảnh):</label>
+                <input type="file" id="imageUpload" class="form-control" accept="image/*" multiple>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+            <div class="mt-3">
+                <label for="videoUpload">Tải lên video:</label>
+                <input type="file" id="videoUpload" class="form-control" accept="video/*">
+                <div class="image-preview" id="videoPreview"></div>
+            </div>
+        </div>
+
+        <!-- Danh mục -->
+        <div class="form-section">
+            <label for="category">Danh Mục Tin Đăng *</label>
+            <select class="form-select" id="category">
+                <option selected>Đồ điện tử - Điện thoại</option>
+            </select>
+        </div>
+
+        <!-- Thông tin chi tiết -->
+        <div class="form-section">
+            <h6>Thông tin chi tiết</h6>
+            <label for="condition">Tình trạng *</label>
+            <input class="form-control" id="condition" type="text">
+
+            <label for="brand">Hãng *</label>
+            <input class="form-control" id="brand" type="text">
+
+            <label for="color">Màu sắc</label>
+            <input class="form-control" id="color" type="text">
+
+            <label for="capacity">Dung lượng</label>
+            <input class="form-control" id="capacity" type="text">
+
+            <label for="warranty">Chính sách bảo hành</label>
+            <input class="form-control" id="warranty" type="text">
+
+            <label for="origin">Xuất xứ</label>
+            <input class="form-control" id="origin" type="text">
+
+            <div class="form-check mt-2">
+                <input class="form-check-input" id="free-gift" type="checkbox">
+                <label class="form-check-label" for="free-gift">Tôi muốn cho tặng miễn phí</label>
+            </div>
+
+            <label for="price" class="mt-3">Giá bán *</label>
+            <input class="form-control" id="price" type="text">
+        </div>
+
+        <!-- Tiêu đề và mô tả -->
+        <div class="form-section">
+            <h6>Tiêu đề tin đăng và Mô tả chi tiết</h6>
+            <label for="title">Tiêu đề tin đăng *</label>
+            <input class="form-control" id="title" type="text">
+
+            <label for="description" class="mt-3">Mô tả chi tiết *</label>
+            <textarea class="form-control" id="description" rows="5"></textarea>
+            <small class="form-text text-muted">
+                - Xuất xứ, tình trạng chiếc điện thoại<br>
+                - Thời gian sử dụng<br>
+                - Bảo hành nếu có<br>
+                - Sửa chữa, nâng cấp, phụ kiện đi kèm<br>
+                - Chấp nhận thanh toán và vận chuyển qua Chợ Tốt
+            </small>
+        </div>
+
+        <!-- Địa chỉ -->
+        <div class="form-section">
+            <h6>Địa chỉ người bán</h6>
+            <label for="province">Tỉnh/Thành phố *</label>
+            <select class="form-select" id="province">
+                <option value="" disabled selected>Chọn tỉnh/thành phố</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+            </select>
+
+            <label for="district" class="mt-3">Quận/Huyện *</label>
+            <select class="form-select" id="district">
+                <option value="" disabled selected>Chọn quận/huyện</option>
+                <option value="Liên Chiểu">Liên Chiểu</option>
+                <option value="Hải Châu">Hải Châu</option>
+                <option value="Thanh Khê">Thanh Khê</option>
+            </select>
+
+            <label for="ward" class="mt-3">Phường/Xã *</label>
+            <select class="form-select" id="ward">
+                <option value="" disabled selected>Chọn phường/xã</option>
+                <option value="Hòa Khánh Nam">Hòa Khánh Nam</option>
+                <option value="Hòa Khánh Bắc">Hòa Khánh Bắc</option>
+                <option value="Hòa Minh">Hòa Minh</option>
+            </select>
+
+            <label for="specificAddress" class="mt-3">Địa chỉ cụ thể *</label>
+            <input type="text" id="specificAddress" class="form-control" placeholder="Số nhà, tên đường, v.v.">
+        </div>
+
+        <!-- Nút Submit -->
+        <div class="text-center">
+            <button type="submit" class="btn-submit">Đăng Tin</button>
+        </div>
+    </form>
+</div>
+<script>
+    const uploadedFiles = {
+        images: [],
+        videos: []
+    };
+
+    // Hàm kiểm tra tệp
+    function validateFile(file, type, maxSizeMB) {
+        const validTypes = type === 'image' ? ['image/jpeg', 'image/png', 'image/gif'] : ['video/mp4', 'video/webm'];
+        if (!validTypes.includes(file.type)) {
+            alert(`Chỉ chấp nhận ${type === 'image' ? 'ảnh' : 'video'} dạng: ${validTypes.join(', ')}`);
+            return false;
+        }
+        if (file.size > maxSizeMB * 1024 * 1024) {
+            alert(`Kích thước tối đa cho mỗi ${type === 'image' ? 'ảnh' : 'video'} là ${maxSizeMB} MB`);
+            return false;
+        }
+        return true;
+    }
+
+    // Tạo phần tử xem trước
+    function createPreviewElement(type, file, container, filesArray) {
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative';
+
+        if (type === 'image') {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.alt = 'Hình ảnh đã tải lên';
+            img.style.width = '75px';
+            img.style.height = '75px';
+            img.style.objectFit = 'cover';
+            wrapper.appendChild(img);
+        } else if (type === 'video') {
+            const video = document.createElement('video');
+            video.src = URL.createObjectURL(file);
+            video.controls = true;
+            video.style.width = '75px';
+            video.style.height = '75px';
+            wrapper.appendChild(video);
+        }
+
+        // Thêm nút xóa
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'X';
+        removeBtn.style.position = 'absolute';
+        removeBtn.style.top = '5px';
+        removeBtn.style.right = '5px';
+        removeBtn.style.background = 'red';
+        removeBtn.style.color = 'white';
+        removeBtn.style.border = 'none';
+        removeBtn.style.borderRadius = '81%';
+        removeBtn.style.cursor = 'pointer';
+        removeBtn.style.width = '10px';
+        removeBtn.style.height = '10px';
+        removeBtn.style.fontSize = '8px';
+        removeBtn.style.alignItems = 'center';
+        removeBtn.style.display = 'flex';
+        removeBtn.style.justifyContent = 'center';
+        removeBtn.style.padding = '7px';
+
+        removeBtn.onclick = () => {
+            wrapper.remove();
+            const index = filesArray.indexOf(file);
+            if (index > -1) filesArray.splice(index, 1);
+        };
+
+        wrapper.appendChild(removeBtn);
+        container.appendChild(wrapper);
+    }
+
+    // Xử lý tải lên hình ảnh
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageUpload.addEventListener('change', (event) => {
+        Array.from(event.target.files).forEach(file => {
+            if (validateFile(file, 'image', 5)) { // 5 MB giới hạn
+                uploadedFiles.images.push(file);
+                createPreviewElement('image', file, imagePreview, uploadedFiles.images);
+            }
+        });
+    });
+
+    // Xử lý tải lên video
+    const videoUpload = document.getElementById('videoUpload');
+    const videoPreview = document.getElementById('videoPreview');
+
+    videoUpload.addEventListener('change', (event) => {
+        Array.from(event.target.files).forEach(file => {
+            if (validateFile(file, 'video', 50)) { // 50 MB giới hạn
+                uploadedFiles.videos.push(file);
+                createPreviewElement('video', file, videoPreview, uploadedFiles.videos);
+            }
+        });
+    });
+
+    // Xử lý khi gửi biểu mẫu
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Ngăn việc gửi biểu mẫu mặc định
+
+        // In thông tin tệp đã tải lên (hoặc xử lý)
+        console.log('Hình ảnh:', uploadedFiles.images);
+        console.log('Video:', uploadedFiles.videos);
+
+        // Nếu cần gửi tệp qua server, bạn có thể sử dụng FormData
+        const formData = new FormData();
+        uploadedFiles.images.forEach((image, index) => formData.append(`images[${index}]`, image));
+        uploadedFiles.videos.forEach((video, index) => formData.append(`videos[${index}]`, video));
+
+        // Gửi formData qua Fetch API (ví dụ)
+        /*
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+        */
+    });
+</script>
+
+
