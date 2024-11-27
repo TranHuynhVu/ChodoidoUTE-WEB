@@ -367,3 +367,9 @@ FodyWeavers.xsd
 
 # Database
 appsettings.json
+
+#obj
+obj/
+
+#bin
+bin/
