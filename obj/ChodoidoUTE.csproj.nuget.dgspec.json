@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\ChodoidoUTE.csproj": {}
+    "D:\\Web Developer\\ASP.NET\\ThiCuoiKi\\ChodoidoUTE-WEB\\ChodoidoUTE.csproj": {}
   },
   "projects": {
-    "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\ChodoidoUTE.csproj": {
+    "D:\\Web Developer\\ASP.NET\\ThiCuoiKi\\ChodoidoUTE-WEB\\ChodoidoUTE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\ChodoidoUTE.csproj",
+        "projectUniqueName": "D:\\Web Developer\\ASP.NET\\ThiCuoiKi\\ChodoidoUTE-WEB\\ChodoidoUTE.csproj",
         "projectName": "ChodoidoUTE",
-        "projectPath": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\ChodoidoUTE.csproj",
-        "packagesPath": "C:\\Users\\FPT-DEMO\\.nuget\\packages\\",
-        "outputPath": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\obj\\",
+        "projectPath": "D:\\Web Developer\\ASP.NET\\ThiCuoiKi\\ChodoidoUTE-WEB\\ChodoidoUTE.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Web Developer\\ASP.NET\\ThiCuoiKi\\ChodoidoUTE-WEB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\FPT-DEMO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,6 +67,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             }
           },
           "imports": [
