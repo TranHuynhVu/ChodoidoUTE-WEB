@@ -7,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("default");
 builder.Services.AddControllersWithViews();
 
-
-
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString));
 
