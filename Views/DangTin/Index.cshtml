@@ -1,4 +1,7 @@
-﻿
+﻿@inject ChodoidoUTE.Services.Interface.ICategory _category;
+@{
+    var categories = await _category.GetCategories();
+}
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -99,113 +102,57 @@
 </style>
 
 <div class="container">
-    <form>
+    <!-- Form -->
+    <form action="/user/product/create" method="post" id="createTinForm" enctype="multipart/form-data">
         <!-- Hình ảnh và Video -->
         <div class="form-section">
             <h6>Hình ảnh và Video sản phẩm</h6>
             <div>
                 <label for="imageUpload">Tải lên hình ảnh (ít nhất 1 ảnh):</label>
-                <input type="file" id="imageUpload" class="form-control" accept="image/*" multiple>
+                <input type="file" id="ImageUpload" name="ImageUpload" class="form-control" accept="image/*" multiple>
                 <div class="image-preview" id="imagePreview"></div>
             </div>
             <div class="mt-3">
                 <label for="videoUpload">Tải lên video:</label>
-                <input type="file" id="videoUpload" class="form-control" accept="video/*">
+                <input type="file" id="VideoUpload" name="VideoUpload" class="form-control" accept="video/*" multiple>
                 <div class="image-preview" id="videoPreview"></div>
             </div>
         </div>
-
-        <!-- Danh mục -->
+        <!-- Các trường khác -->
         <div class="form-section">
             <label for="category">Danh Mục Tin Đăng *</label>
-            <select class="form-select" id="category">
-                <option selected>Đồ điện tử - Điện thoại</option>
+            <select class="form-select" id="CategoryId" name="CategoryId">
+                @foreach (var item in categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
             </select>
         </div>
-
-        <!-- Thông tin chi tiết -->
         <div class="form-section">
             <h6>Thông tin chi tiết</h6>
-            <label for="condition">Tình trạng *</label>
-            <input class="form-control" id="condition" type="text">
-
-            <label for="brand">Hãng *</label>
-            <input class="form-control" id="brand" type="text">
-
-            <label for="color">Màu sắc</label>
-            <input class="form-control" id="color" type="text">
-
-            <label for="capacity">Dung lượng</label>
-            <input class="form-control" id="capacity" type="text">
-
-            <label for="warranty">Chính sách bảo hành</label>
-            <input class="form-control" id="warranty" type="text">
-
-            <label for="origin">Xuất xứ</label>
-            <input class="form-control" id="origin" type="text">
-
-            <div class="form-check mt-2">
-                <input class="form-check-input" id="free-gift" type="checkbox">
-                <label class="form-check-label" for="free-gift">Tôi muốn cho tặng miễn phí</label>
-            </div>
-
-            <label for="price" class="mt-3">Giá bán *</label>
-            <input class="form-control" id="price" type="text">
+            <label for="Title">Tiêu đề</label>
+            <input class="form-control" id="Title" name="Title" type="text" required>
+            <label for="Price">Giá</label>
+            <input class="form-control" id="Price" name="Price" type="number" required>
+            <label for="Count">Số lượng</label>
+            <input class="form-control" id="Count" name="Count" type="number" required>
+            <label for="isNew">Tình trạng</label>
+            <select id="IsNew" class="form-select" name="IsNew" required>
+                <option value="true">Mới</option>
+                <option value="false">Đã dùng</option>
+            </select>
         </div>
-
-        <!-- Tiêu đề và mô tả -->
         <div class="form-section">
             <h6>Tiêu đề tin đăng và Mô tả chi tiết</h6>
-            <label for="title">Tiêu đề tin đăng *</label>
-            <input class="form-control" id="title" type="text">
-
-            <label for="description" class="mt-3">Mô tả chi tiết *</label>
-            <textarea class="form-control" id="description" rows="5"></textarea>
-            <small class="form-text text-muted">
-                - Xuất xứ, tình trạng chiếc điện thoại<br>
-                - Thời gian sử dụng<br>
-                - Bảo hành nếu có<br>
-                - Sửa chữa, nâng cấp, phụ kiện đi kèm<br>
-                - Chấp nhận thanh toán và vận chuyển qua Chợ Tốt
-            </small>
+            <label for="Description" class="mt-3">Mô tả chi tiết *</label>
+            <textarea class="form-control" id="Description" name="Description" rows="5"></textarea>
         </div>
-
-        <!-- Địa chỉ -->
-        <div class="form-section">
-            <h6>Địa chỉ người bán</h6>
-            <label for="province">Tỉnh/Thành phố *</label>
-            <select class="form-select" id="province">
-                <option value="" disabled selected>Chọn tỉnh/thành phố</option>
-                <option value="Đà Nẵng">Đà Nẵng</option>
-                <option value="Hà Nội">Hà Nội</option>
-                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-            </select>
-
-            <label for="district" class="mt-3">Quận/Huyện *</label>
-            <select class="form-select" id="district">
-                <option value="" disabled selected>Chọn quận/huyện</option>
-                <option value="Liên Chiểu">Liên Chiểu</option>
-                <option value="Hải Châu">Hải Châu</option>
-                <option value="Thanh Khê">Thanh Khê</option>
-            </select>
-
-            <label for="ward" class="mt-3">Phường/Xã *</label>
-            <select class="form-select" id="ward">
-                <option value="" disabled selected>Chọn phường/xã</option>
-                <option value="Hòa Khánh Nam">Hòa Khánh Nam</option>
-                <option value="Hòa Khánh Bắc">Hòa Khánh Bắc</option>
-                <option value="Hòa Minh">Hòa Minh</option>
-            </select>
-
-            <label for="specificAddress" class="mt-3">Địa chỉ cụ thể *</label>
-            <input type="text" id="specificAddress" class="form-control" placeholder="Số nhà, tên đường, v.v.">
-        </div>
-
         <!-- Nút Submit -->
         <div class="text-center">
             <button type="submit" class="btn-submit">Đăng Tin</button>
         </div>
     </form>
+
 </div>
 <script>
     const uploadedFiles = {
@@ -279,12 +226,12 @@
     }
 
     // Xử lý tải lên hình ảnh
-    const imageUpload = document.getElementById('imageUpload');
+    const imageUpload = document.getElementById('ImageUpload');
     const imagePreview = document.getElementById('imagePreview');
 
     imageUpload.addEventListener('change', (event) => {
         Array.from(event.target.files).forEach(file => {
-            if (validateFile(file, 'image', 5)) { // 5 MB giới hạn
+            if (validateFile(file, 'image', 10)) { // 10 MB giới hạn cho ảnh
                 uploadedFiles.images.push(file);
                 createPreviewElement('image', file, imagePreview, uploadedFiles.images);
             }
@@ -292,42 +239,49 @@
     });
 
     // Xử lý tải lên video
-    const videoUpload = document.getElementById('videoUpload');
+    const videoUpload = document.getElementById('VideoUpload');
     const videoPreview = document.getElementById('videoPreview');
 
     videoUpload.addEventListener('change', (event) => {
         Array.from(event.target.files).forEach(file => {
-            if (validateFile(file, 'video', 50)) { // 50 MB giới hạn
+            if (validateFile(file, 'video', 50)) { // 50 MB giới hạn cho video
                 uploadedFiles.videos.push(file);
                 createPreviewElement('video', file, videoPreview, uploadedFiles.videos);
             }
         });
     });
 
-    // Xử lý khi gửi biểu mẫu
-    const form = document.querySelector('form');
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Ngăn việc gửi biểu mẫu mặc định
-
-        // In thông tin tệp đã tải lên (hoặc xử lý)
-        console.log('Hình ảnh:', uploadedFiles.images);
-        console.log('Video:', uploadedFiles.videos);
-
-        // Nếu cần gửi tệp qua server, bạn có thể sử dụng FormData
-        const formData = new FormData();
-        uploadedFiles.images.forEach((image, index) => formData.append(`images[${index}]`, image));
-        uploadedFiles.videos.forEach((video, index) => formData.append(`videos[${index}]`, video));
-
-        // Gửi formData qua Fetch API (ví dụ)
-        /*
-        fetch('/upload', {
-            method: 'POST',
-            body: formData
-        }).then(response => response.json())
-          .then(data => console.log(data))
-          .catch(error => console.error('Error:', error));
-        */
-    });
 </script>
+@* @section Scripts {
+    <script>
+        $('#createTinForm').on('submit', function (event) {
+            event.preventDefault(); // Ngăn gửi form mặc định
 
+            const formData = new FormData(this);
+
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+            // Gửi AJAX request
+            $.ajax({
+                url: '/user/product/create', 
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    showToast(response.message, 'success');
+                },
+                error: function (xhr, status, error) {
+                    console.error(`Error: ${error}`);
+                    console.error(xhr.responseText);
+                    showToast(message, 'danger');
+                }
+            });
+        });
+
+
+    </script>
+
+} *@
 

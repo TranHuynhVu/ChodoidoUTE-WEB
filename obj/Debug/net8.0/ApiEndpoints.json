@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "ContainingType": "ChodoidoUTE.Api.User.QuanlytinController",
+    "Method": "SetTinDangAn",
+    "RelativePath": "quanlytin/product/antin/{id}",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChodoidoUTE.Api.User.QuanlytinController",
+    "Method": "BoYeuThich",
+    "RelativePath": "quanlytin/product/boyeuthich/{id}",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChodoidoUTE.Api.User.QuanlytinController",
+    "Method": "SuaTin",
+    "RelativePath": "quanlytin/product/suatin/{id}",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChodoidoUTE.Api.User.QuanlytinController",
+    "Method": "SetTinDangXoa",
+    "RelativePath": "quanlytin/product/xoatin/{id}",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChodoidoUTE.Api.User.QuanlytinController",
+    "Method": "SetYeuThich",
+    "RelativePath": "quanlytin/yeuthich/{id}",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

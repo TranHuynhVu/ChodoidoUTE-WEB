@@ -1,7 +1,11 @@
 ﻿@{
     Layout = null;
 }
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> userManager;
+@inject SignInManager<AppUser> signManager;
+@using ChodoidoUTE.ViewModels;
+@model List<TinNhanVM>;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +14,7 @@
     <title>Messenger Style Chat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <style>
         body {
             background-color: #f0f2f5;
@@ -86,60 +91,105 @@
                     <input type="text" class="form-control" placeholder="Tìm kiếm...">
                 </div>
                 <ul class="list-group chat-list">
-                    <li class="list-group-item chat-item d-flex align-items-center">
-                        <img src="https://placehold.co/50x50" alt="Avatar" class="rounded-circle me-2">
-                        <div>
-                            <div class="fw-bold">Nguyễn Văn A</div>
-                            <small class="text-muted">Tin nhắn gần đây...</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item chat-item d-flex align-items-center">
-                        <img src="https://placehold.co/50x50" alt="Avatar" class="rounded-circle me-2">
-                        <div>
-                            <div class="fw-bold">Trần Văn B</div>
-                            <small class="text-muted">Tin nhắn gần đây...</small>
-                        </div>
-                    </li>
+                    @{
+                        var user = await userManager.GetUserAsync(User);     
+                        
+                    }
+                    @if (Model == null || !Model.Any())
+                    {
+                        <p class="text-muted">Không có tin nhắn nào để hiển thị.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group">
+                            @foreach (var item in Model)
+                            {
+                                @if(user.Id == item.NguoiGui.Id)
+                                {
+                                    <li class="list-group-item chat-item d-flex align-items-center" onclick="GetListChiTietTinNhan(@item.Id)">
+                                        <!-- Avatar người nhận -->
+                                        <img src="@item.NguoiNhan?.ImgUrl" alt="Avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+
+                                        <div class="flex-grow-1">
+                                            <!-- Tên người nhận -->
+                                            <div class="fw-bold">@item.NguoiNhan?.Name</div>
+
+                                            <!-- Tin nhắn cuối -->
+                                            <small class="text-muted d-block">
+                                                @item.LastMessage
+                                            </small>
+
+                                            <!-- Thời gian gửi tin nhắn -->
+                                            <small class="text-muted">
+                                                @item.LastMessageTime?.ToString("HH:mm dd/MM/yyyy")
+                                            </small>
+                                        </div>
+
+                                        <!-- Ảnh sản phẩm -->
+                                        <img src="@item.Product?.ProductImages?.FirstOrDefault()?.UrlImg"
+                                             alt="Product" class="rounded" style="width: 60px; height: 60px;">
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="list-group-item chat-item d-flex align-items-center" onclick="GetListChiTietTinNhan(@item.Id)">
+                                        <!-- Avatar người nhận -->
+                                        <img src="@item.NguoiGui?.ImgUrl" alt="Avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+
+                                        <div class="flex-grow-1">
+                                            <!-- Tên người nhận -->
+                                            <div class="fw-bold">@item.NguoiGui?.Name</div>
+
+                                            <!-- Tin nhắn cuối -->
+                                            <small class="text-muted d-block">
+                                                @item.LastMessage
+                                            </small>
+
+                                            <!-- Thời gian gửi tin nhắn -->
+                                            <small class="text-muted">
+                                                @item.LastMessageTime?.ToString("HH:mm dd/MM/yyyy")
+                                            </small>
+                                        </div>
+
+                                        <!-- Ảnh sản phẩm -->
+                                        <img src="@item.Product?.ProductImages?.FirstOrDefault()?.UrlImg"
+                                             alt="Product" class="rounded" style="width: 60px; height: 60px;">
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    }
                 </ul>
             </div>
 
             <!-- Chat container -->
-            <div class="col-md-8 col-lg-9 d-flex flex-column chat-container">
-                <!-- Header -->
-                <div class="d-flex align-items-center p-3 bg-white border-bottom">
-                    <img src="https://placehold.co/40x40" alt="Avatar" class="rounded-circle me-2">
-                    <div>
-                        <div class="fw-bold">Nguyễn Văn A</div>
-                        <small class="text-muted">Đang hoạt động</small>
-                    </div>
-                    <div class="ms-auto">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </div>
-                </div>
-
-                <!-- Messages -->
-                <div class="chat-messages">
-                    <div class="d-flex flex-column">
-                        <div class="message left">
-                            <p>Xin chào! Đây là tin nhắn của bạn.</p>
-                        </div>
-                        <div class="message right">
-                            <p>Chào bạn! Tôi có thể giúp gì?</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Input -->
-                <div class="chat-input d-flex align-items-center bg-white">
-                    <input type="text" class="form-control me-2" placeholder="Nhập tin nhắn...">
-                    <button class="btn btn-primary send-btn">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
+            <div id="Chat-container" class="col-md-8 col-lg-9 d-flex flex-column chat-container">
+               
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
+    <script>
+        function GetListChiTietTinNhan(id) {
+            $.ajax({
+                url: `/chat/product/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        $("#Chat-container").html(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
+
+    </script>
 </body>
 </html>

@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\ChodoidoUTE.bundle.scp.css"
     },
     {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\Logo_Đại_học_Sư_phạm_Kỹ_thuật_Đà_Nẵng.png",
+      "PackagePath": "staticwebassets\\Logo_Đại_học_Sư_phạm_Kỹ_thuật_Đà_Nẵng.png"
+    },
+    {
       "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\css\\User\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\css\\User\\bootstrap-grid.css"
     },
@@ -43,6 +47,30 @@
     {
       "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\images\\038198e1-6034-40be-ad5d-b6c82b4e83a1.png",
+      "PackagePath": "staticwebassets\\images\\038198e1-6034-40be-ad5d-b6c82b4e83a1.png"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\images\\13a55f0d-9d68-434c-84df-6555f7cf1b38.jpg",
+      "PackagePath": "staticwebassets\\images\\13a55f0d-9d68-434c-84df-6555f7cf1b38.jpg"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\images\\17d0cfdd-e9ce-4a6f-a300-1a5003499885.png",
+      "PackagePath": "staticwebassets\\images\\17d0cfdd-e9ce-4a6f-a300-1a5003499885.png"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\images\\3bcd7d2e-a9c8-412b-bebc-a74edb7586bd.jpg",
+      "PackagePath": "staticwebassets\\images\\3bcd7d2e-a9c8-412b-bebc-a74edb7586bd.jpg"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\images\\507c0d65-8895-4d75-860c-5d5d26e34c35.png",
+      "PackagePath": "staticwebassets\\images\\507c0d65-8895-4d75-860c-5d5d26e34c35.png"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\img-user.jpg",
+      "PackagePath": "staticwebassets\\img-user.jpg"
     },
     {
       "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\img\\carousel-1.jpg",
@@ -823,6 +851,22 @@
     {
       "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\scss\\style.scss",
       "PackagePath": "staticwebassets\\scss\\style.scss"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\videos\\1465926c-95fe-4b7f-abb2-d9f4c31c3c99.mp4",
+      "PackagePath": "staticwebassets\\videos\\1465926c-95fe-4b7f-abb2-d9f4c31c3c99.mp4"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\videos\\26e3a012-e10f-4f1d-a537-bc18b402b934.mp4",
+      "PackagePath": "staticwebassets\\videos\\26e3a012-e10f-4f1d-a537-bc18b402b934.mp4"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\videos\\8954f85e-fb90-4959-835a-fd55dd187662.mp4",
+      "PackagePath": "staticwebassets\\videos\\8954f85e-fb90-4959-835a-fd55dd187662.mp4"
+    },
+    {
+      "Id": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\videos\\f5877e0d-731a-4d93-8f71-8aa86bdf7541.mp4",
+      "PackagePath": "staticwebassets\\videos\\f5877e0d-731a-4d93-8f71-8aa86bdf7541.mp4"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ChodoidoUTE.Microsoft.AspNetCore.StaticWebAssets.props",

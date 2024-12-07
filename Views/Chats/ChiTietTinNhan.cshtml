@@ -1,0 +1,108 @@
+﻿@using ChodoidoUTE.ViewModels
+@model TinNhanVM
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> userManager;
+@inject SignInManager<AppUser> signManager;
+@{
+    var user = await userManager.GetUserAsync(User);
+    var userNhan = user;
+    if (user.Id == Model.NguoiGui.Id)
+    {
+        userNhan = Model.NguoiNhan;        
+    }
+    else
+    {
+        userNhan = Model.NguoiGui;
+     }
+}
+       
+<div class="d-flex align-items-center p-3 bg-white border-bottom">
+    <img src="@userNhan.ImgUrl" height="40" alt="Avatar" class="rounded-circle me-2">
+    <div>
+
+        <div class="fw-bold">@userNhan.Name</div>
+        <small class="text-muted">Đang hoạt động</small>
+    </div>
+    <div class="ms-auto">
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+</div>
+
+<!-- Messages -->
+<div class="chat-messages">
+    <div id="SetMessage" class="d-flex flex-column">
+        @foreach (var item in Model.chiTietTinNhans)
+        {
+            if (user.Id == item.NguoiGuiId)
+            {
+                <div class="message right">
+                    <p>@item.NoiDung</p>
+                </div>
+            }
+            else
+            {
+            
+                <div class="message left">
+                    <p>@item.NoiDung</p>
+                </div>
+            }        
+        }
+    </div>
+</div>
+<!-- Input -->
+<div class="chat-input d-flex align-items-center bg-white">
+    <input id="message" type="text" class="form-control me-2" placeholder="Nhập tin nhắn...">
+    <button class="btn btn-primary send-btn" onclick=" GuiTinNhan()">
+        <i class="fas fa-paper-plane"></i>
+    </button>
+</div>
+<script>
+    function GuiTinNhan() {
+        var message = $("#message").val();
+        var TinNhanId = @Model.Id;
+        var UserNhanId = `@userNhan.Id`;
+        if (!message.trim()) {
+            toastr.warning("Nội dung tin nhắn không được để trống.");
+            return;
+        }
+
+        $.ajax({
+            url: `/chat/product/sent`,
+            type: 'POST',
+            data: JSON.stringify({ Message: message, Id: TinNhanId, NguoiNhanId: UserNhanId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.error == false) {
+                    var newMessageHtml = `
+                            <div class="message right">
+                                <p>${message}</p>
+                            </div>`;
+                    $("#SetMessage").append(newMessageHtml);
+                    $("#message").val(""); 
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Đã xảy ra lỗi: " + error);
+            }
+        });
+    }
+
+</script>
+
+<script>
+    var connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chathub") 
+        .build();
+    connection.on("ReceiveMessage", function (message) {
+        console.log(message);
+        if (@Model.Id == message.id) {
+            $('#SetMessage').append('<div class="message left"><p>' + message.message + '</p></div>');
+        }       
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+</script>

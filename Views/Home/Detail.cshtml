@@ -1,5 +1,33 @@
-﻿
+﻿@using ChodoidoUTE.ViewModels
+@model ItemProductVM
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> userManager;
+@inject SignInManager<AppUser> signManager;
+@{
+    var user = await userManager.GetUserAsync(User);
+}
 <style>
+    #productContainer {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
     .product-image {
         width: 100%;
         height: auto;
@@ -69,7 +97,7 @@
     }
 
     .product-container {
-        max-height: 500px; /* Đặt chiều cao tối đa */
+        max-height: 600px; /* Đặt chiều cao tối đa */
         overflow-y: auto; /* Bật thanh cuộn dọc */
         border: 1px solid #ddd;
         padding: 10px;
@@ -98,7 +126,10 @@
     .carousel-indicators .active {
         border-color: #ff8c00;
     }
+
 </style>
+<!-- Nền mờ -->
+<div class="modal-overlay" id="modalOverlay"></div>
 
 <div class="container mt-4 product-container" id="productContainer">
     <div class="card shadow-sm">
@@ -110,31 +141,60 @@
             <div class="row">
                 <!-- Image Carousel -->
                 <div class="col-md-6">
-                    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <!-- Indicators -->
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" style="background-image: url('https://storage.googleapis.com/a1aa/image/XryAC1GRtI4HN5KSmaTy6iXYcZlOFVDTjjJYFqej5by3vR5JA.jpg');"></button>
-                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" style="background-image: url('https://storage.googleapis.com/a1aa/image/NecKp54dNr02MSgOkQooAoFZF5h1niK3koiTiRalfChqfGlnA.jpg');"></button>
-                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" style="background-image: url('https://storage.googleapis.com/a1aa/image/5URpYIgC6IJrMZJ2v9lraxrcce4w9WUWbRMsM5OJYaS4vR5JA.jpg');"></button>
+                            <div class="carousel-indicators">
+                                @{
+                                    int index = 0;
+                                }
+                                @foreach (var image in Model.Images)
+                                {
+                                    <button type="button"
+                                            data-bs-target="#carouselExampleIndicators"
+                                            data-bs-slide-to="@index"
+                                            class="@(index == 0 ? "active" : "")"
+                                            aria-current="@(index == 0 ? "true" : "false")"
+                                            aria-label="Slide @(index + 1)">
+                                    </button>
+                                    index++;
+                                }
+                                @foreach (var video in Model.Videos)
+                                {
+                                    <button type="button"
+                                            data-bs-target="#carouselExampleIndicators"
+                                            data-bs-slide-to="@index"
+                                            class="@(index == 0 ? "active" : "")"
+                                            aria-current="@(index == 0 ? "true" : "false")"
+                                            aria-label="Slide @(index + 1)">
+                                    </button>
+                                    index++;
+                                }
+                            </div>
+
                         </div>
-                        <!-- Images -->
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://storage.googleapis.com/a1aa/image/XryAC1GRtI4HN5KSmaTy6iXYcZlOFVDTjjJYFqej5by3vR5JA.jpg" class="d-block w-100 product-image" alt="Oppo F11 back view">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://storage.googleapis.com/a1aa/image/NecKp54dNr02MSgOkQooAoFZF5h1niK3koiTiRalfChqfGlnA.jpg" class="d-block w-100 product-image" alt="Oppo F11 specifications">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://storage.googleapis.com/a1aa/image/5URpYIgC6IJrMZJ2v9lraxrcce4w9WUWbRMsM5OJYaS4vR5JA.jpg" class="d-block w-100 product-image" alt="Oppo F11 front view">
-                            </div>
+                            @foreach (var image in Model.Images)
+                            {
+                                <div class="carousel-item @(Model.Videos.Count == 0 && image == Model.Images.First() ? "active" : "")">
+                                    <img src="@image.UrlImg" class="d-block w-100" alt="Slide">
+                                </div>
+                            }
+                            @foreach (var video in Model.Videos)
+                            {
+                                <div class="carousel-item @(video == Model.Videos.First() ? "active" : "")">
+                                    <video class="d-block w-100" controls>
+                                        <source src="@video.VideoUrl" type="video/mp4">
+                                        Trình duyệt của bạn không hỗ trợ video.
+                                    </video>
+                                </div>
+                            }
+
                         </div>
-                        <!-- Controls -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
@@ -142,21 +202,52 @@
                 </div>
                 <!-- Product Information -->
                 <div class="col-md-6">
-                    <h3>Oppo F11 64GB Xanh Dương, Ram 6/64GB, Máy Mượt</h3>
-                    <p>F11 • 64 GB • Hết bảo hành</p>
-                    <p class="price">1.250.000 đ</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Phường Hòa Thuận Đông, Quận Hải Châu, Đà Nẵng</p>
-                    <p><i class="fas fa-clock"></i> Cập nhật 10 phút trước</p>
-                    <button class="btn mb-2">Hiện số 058928****</button>
-                    <button class="btn chat-button mb-2"><i class="fas fa-comments"></i> Chat</button>
-                    <div class="user-info mt-3">
-                        <img src="https://storage.googleapis.com/a1aa/image/jSX964AFrfQZPS2y5QpKgjrYBdnUGLnPxh8Uaj8r7FR3vR5JA.jpg" alt="User profile picture">
-                        <div>
-                            <div class="username">Sáng</div>
-                            <div class="status">Phản hồi: -- • 0 đã bán • Hoạt động 8 phút trước</div>
+                    <!-- Tiêu đề sản phẩm -->
+                    <h3 class="text-primary">@Model.Title</h3>
+                    <p class="text-muted">  @(Model.IsNew == true ? "Hàng mới" : "Đã qua sử dụng")</p>
+
+                    <!-- Giá sản phẩm -->
+                    <p class="price fs-4 fw-bold text-danger">$@Model.Price</p>
+
+                    <!-- Địa chỉ và thời gian cập nhật -->
+                    <div class="mb-3">
+                        <p class="mb-1"><i class="fas fa-map-marker-alt text-secondary me-2"></i>Phường Hòa Thuận Đông, Quận Hải Châu, Đà Nẵng</p>
+                        <p><i class="fas fa-clock text-secondary me-2"></i>Cập nhật 10 phút trước</p>
+                    </div>
+
+                    <!-- Nút hành động -->
+                    <div class="d-flex gap-2 mb-4">
+                        <button class="btn btn-outline-primary flex-grow-1">Hiện số 058928****</button>
+                        @if (user.Id == Model.User.Id)
+                        {
+                            // Nút bị vô hiệu hóa và làm mờ
+                            <a href="#" class="btn btn-success flex-grow-1 disabled" style="pointer-events: none; opacity: 0.6;">
+                                <i class="fas fa-comments me-2"></i>Chat
+                            </a>
+                        }
+                        else
+                        {
+                        // Nút bình thường
+                            <a href="/chat/product/create/@Model.Id" class="btn btn-success flex-grow-1">
+                                <i class="fas fa-comments me-2"></i>Chat
+                            </a>
+                        }
+                    </div>
+
+
+                    <!-- Thông tin người bán -->
+                    <div class="user-info d-flex align-items-center p-3 border rounded">
+                        <img src="@Model.User.ImgUrl"
+                             alt="User profile picture"
+                             class="rounded-circle me-3"
+                             style="width: 50px; height: 50px;">
+                        <div style="text-align:left; ">
+                            <div class="username fw-bold">@Model.User.Name</div>
+                            <div class="status text-muted">Phản hồi: -- • 0 đã bán • Hoạt động 8 phút trước</div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="container mt-4">
@@ -166,7 +257,7 @@
             </h5>
             <div class="description bg-light p-3 rounded shadow-sm">
                 <p class="mb-3">
-                    <strong>*Máy mình đang dùng.</strong>
+                    <strong>@Model.Description</strong>
                 </p>
             </div>
             <!-- Phần cuối -->
@@ -185,6 +276,7 @@
 <script>
     document.getElementById('hideButton').addEventListener('click', function () {
         document.getElementById('productContainer').classList.toggle('hidden');
+        document.getElementById("modalOverlay").style.display = "none";
     });
 </script>
 

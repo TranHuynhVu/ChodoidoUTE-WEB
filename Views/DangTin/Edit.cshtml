@@ -1,0 +1,262 @@
+﻿@using ChodoidoUTE.ViewModels;
+@model ItemProductVM;
+@inject ChodoidoUTE.Services.Interface.ICategory _category;
+@{
+    var categories = await _category.GetCategories();
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        padding: 20px;
+    }
+
+    .container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+        .form-section h6 {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .form-section label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .image-preview {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+        .image-preview img,
+        .image-preview video {
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .image-preview video {
+            background: #000;
+        }
+
+    .btn-submit {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+            cursor: pointer;
+        }
+
+    .image-preview, .video-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+        .image-preview img,
+        .video-preview video {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+            .image-preview img:hover,
+            .video-preview video:hover {
+                transform: scale(1.1);
+            }
+
+    button {
+        transition: background 0.2s;
+    }
+
+        button:hover {
+            background: darkred;
+        }
+</style>
+
+<div class="container">
+
+<form action="/user/product/edit/@Model.Id" method="post" id="editForm" enctype="multipart/form-data">
+    <!-- Thêm ID sản phẩm ẩn -->
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+    <!-- Hình ảnh và Video -->
+    <div class="form-section">
+        <h6>Hình ảnh và Video sản phẩm</h6>
+
+        <!-- Hình ảnh hiện tại -->
+        <div>
+            <label for="ImageUpload">Tải lên hình ảnh (ít nhất 1 ảnh):</label>
+            <input type="file" id="ImageUpload" name="ImageUpload" class="form-control" accept="image/*" multiple>
+            <div class="image-preview" id="imagePreview">
+                @foreach (var img in Model.Images)
+                {
+                    <div>
+                        <img src="@img.UrlImg" alt="Uploaded Image" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Video hiện tại -->
+        <div class="mt-3">
+            <label for="VideoUpload">Tải lên video:</label>
+            <input type="file" id="VideoUpload" name="VideoUpload" class="form-control" accept="video/*" multiple>
+            <div class="video-preview" id="videoPreview">
+                @foreach (var video in Model.Videos)
+                {
+                    <div>
+                        <video src="@video.VideoUrl" controls></video>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Các trường khác -->
+    <div class="form-section">
+        <label for="category">Danh Mục Tin Đăng *</label>
+        <select class="form-select" id="CategoryId" name="CategoryId">
+            @foreach (var item in categories)
+            {
+                 <option value="@item.Id" selected=" @(item.Id == Model.Category.Id ? "selected" : "")">@item.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-section">
+        <h6>Thông tin chi tiết</h6>
+        <label for="Title">Tiêu đề</label>
+        <input class="form-control" id="Title" name="Title" type="text" value="@Model.Title" required>
+
+        <label for="Price">Giá</label>
+        <input class="form-control" id="Price" name="Price" type="number" value="@Model.Price" required>
+
+        <label for="Count">Số lượng</label>
+        <input class="form-control" id="Count" name="Count" type="number" value="@Model.Count" required>
+
+        <label for="IsNew">Tình trạng</label>
+        <select id="IsNew" class="form-select" name="IsNew" required>
+                <option value="true" selected="@(Model.IsNew == true ? "selected" : "")">Mới</option>
+                <option value="false" selected="@(Model.IsNew == false ? "selected" : "")">Đã dùng</option>
+        </select>
+    </div>
+
+    <div class="form-section">
+        <h6>Tiêu đề tin đăng và Mô tả chi tiết</h6>
+        <label for="Description" class="mt-3">Mô tả chi tiết *</label>
+        <textarea class="form-control" id="Description" name="Description" rows="5">@Model.Description</textarea>
+    </div>
+
+    <!-- Nút Submit -->
+    <div class="text-center">
+        <button type="submit" class="btn-submit">Cập nhật</button>
+    </div>
+</form>
+
+
+
+</div>
+<script>
+    const uploadedFiles = {
+        images: [],
+        videos: []
+    };
+
+    const imageUpload = document.getElementById('ImageUpload');
+    const videoUpload = document.getElementById('VideoUpload');
+    const imagePreview = document.getElementById('imagePreview');
+    const videoPreview = document.getElementById('videoPreview');
+
+    // Hàm tạo phần tử xem trước (image/video)
+    function createPreviewElement(type, file, container, filesArray) {
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative';
+
+        if (type === 'image') {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.alt = 'Hình ảnh đã tải lên';
+            img.style.width = '75px';
+            img.style.height = '75px';
+            img.style.objectFit = 'cover';
+            wrapper.appendChild(img);
+        } else if (type === 'video') {
+            const video = document.createElement('video');
+            video.src = URL.createObjectURL(file);
+            video.controls = true;
+            video.style.width = '75px';
+            video.style.height = '75px';
+            wrapper.appendChild(video);
+        }
+
+        // Thêm nút xóa
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'X';
+        removeBtn.style.position = 'absolute';
+        removeBtn.style.top = '5px';
+        removeBtn.style.right = '5px';
+        removeBtn.style.background = 'red';
+        removeBtn.style.color = 'white';
+        removeBtn.style.border = 'none';
+        removeBtn.style.borderRadius = '50%';
+        removeBtn.style.cursor = 'pointer';
+        removeBtn.style.fontSize = '12px';
+
+        removeBtn.onclick = () => {
+            wrapper.remove();
+            const index = filesArray.indexOf(file);
+            if (index > -1) filesArray.splice(index, 1);
+        };
+
+        wrapper.appendChild(removeBtn);
+        container.appendChild(wrapper);
+    }
+    // Xử lý tải lên hình ảnh mới
+    imageUpload.addEventListener('change', (event) => {
+        Array.from(event.target.files).forEach(file => {
+            uploadedFiles.images.push(file);
+            createPreviewElement('image', file, imagePreview, uploadedFiles.images);
+        });
+    });
+
+    // Xử lý tải lên video mới
+    videoUpload.addEventListener('change', (event) => {
+        Array.from(event.target.files).forEach(file => {
+            uploadedFiles.videos.push(file);
+            createPreviewElement('video', file, videoPreview, uploadedFiles.videos);
+        });
+    });
+
+  
+</script>
+
+
