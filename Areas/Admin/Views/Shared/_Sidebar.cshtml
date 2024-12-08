@@ -23,8 +23,8 @@
     <div class="sidebar-heading">
         Management Category
     </div>
-    <li class="nav-item @* @(title.Contains("danh mục") ? "active" : "") *@">
-        <a class="nav-link collapsed" href="/admin/management/category" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+    <li class="nav-item @(ViewData["Title"]?.ToString().IndexOf("danh mục", StringComparison.OrdinalIgnoreCase) >= 0 ? "active" : "")">
+        <a class="nav-link collapsed" href="/admin/category" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-list-1-2"></i>
             <span>Quản lý danh mục</span>
         </a>
