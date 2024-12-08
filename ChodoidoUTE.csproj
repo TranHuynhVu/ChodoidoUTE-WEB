@@ -9,9 +9,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -19,14 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\User\Controller\" />
+    <Folder Include="Api\Admin\" />
+	<Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\" />
     <Folder Include="Areas\User\Models\" />
+	<Folder Include="Areas\User\Controller\" />
     <Folder Include="Areas\User\Views\Shared\" />
     <Folder Include="Migrations\" />
     <Folder Include="Api\" />
-    <Folder Include="Api\Admin\" />
-    <Folder Include="Areas\Admin\" />
     <Folder Include="wwwroot\css\Admin\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\videos\" />

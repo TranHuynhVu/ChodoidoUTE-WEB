@@ -1,0 +1,168 @@
+﻿@using ChodoidoUTE.ViewModels
+@model List<ItemProductVM>
+<style>
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+    }
+
+    .saved-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+        .saved-item img {
+            width: 100px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .saved-item .details {
+            flex-grow: 1;
+        }
+
+            .saved-item .details h5 {
+                margin: 0;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .saved-item .details .price {
+                color: #888;
+                font-size: 14px;
+            }
+
+            .saved-item .details .status {
+                color: #888;
+                font-size: 14px;
+            }
+
+        .saved-item .actions {
+            display: flex;
+            align-items: center;
+        }
+
+            .saved-item .actions .btn {
+                margin-right: 10px;
+            }
+
+            .saved-item .actions .heart {
+                color: red;
+                font-size: 20px;
+            }
+</style>
+@if (Model != null)
+{
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">
+                        Chợ đổi đồ UTE
+                    </a>
+                </li>
+                <li aria-current="page" class="breadcrumb-item active">
+                    Tin đăng đã lưu
+                </li>
+            </ol>
+        </nav>
+        <h4 class="mb-3" id="tin-dang-da-luu">
+            Tin đăng đã lưu (@Model.Count / 100)
+        </h4>
+        @foreach (var item in Model)
+        {
+            <div class="saved-item">
+                <img alt="Front view of a black Mazda 2 AT DELUXE 2024 car" height="100" src="@item.Images[0].UrlImg" width="100" />
+                <div class="details">
+                    <h5>
+                        @item.Title
+                    </h5>
+                    <div class="price">
+                        $@item.Price
+                    </div>
+                    <div class="status">
+
+                        @{
+                            // CHO_DUYET, DA_AN, DA_BAN, DA_DUYET, TU_CHOI
+                            // Sử dụng biến để xác định trạng thái của sản phẩm
+                            string statusMessage = string.Empty;
+
+                            // Đánh giá trạng thái
+                            switch (item.PostProductStatus)
+                            {
+                                case "CHO_DUYET":
+                                    statusMessage = "Chờ duyệt";
+                                    break;
+                                case "DA_AN":
+                                    statusMessage = "Tin đã ẩn";
+                                    break;
+                                case "DA_BAN":
+                                    statusMessage = "Đã bán";
+                                    break;
+                                case "DA_DUYET":
+                                    statusMessage = "Đã duyệt";
+                                    break;
+                                case "TU_CHOI":
+                                    statusMessage = "Đã từ chối";
+                                    break;
+                                default:
+                                    statusMessage = "Trạng thái không xác định";
+                                    break;
+                            }
+                        }
+
+                        @statusMessage
+                    </div>
+                </div>
+                <div class="actions">
+                    <a href="/chat/product/create/@item.Id" id="btnChat" class="btn btn-outline-success">
+                        Chat
+                    </a>
+                    <i class="fas fa-heart heart" onclick="BoYeuThich(this,@item.Id)">
+                    </i>
+                </div>
+            </div>
+        }
+    </div>
+}
+@section Scripts {
+    <script>
+        function BoYeuThich(icon, id) {
+            var countYT = @Model.Count;
+            const $item = $(icon).closest('.saved-item')
+            console.log($item);
+            $.ajax({
+                url: `/quanlytin/product/boyeuthich/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                        }
+                        toastr.success(response.message);
+                        // $(icon).css("color", "while");
+                        countYT -= 1;
+                        $("#tin-dang-da-luu").text(`Tin đăng đã lưu (${countYT} / 100)`);
+                        $("#count-yeuthich").text(countYT);
+                        $item.hide();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
+    </script>
+}

@@ -1,4 +1,6 @@
-﻿<style>
+﻿@using ChodoidoUTE.ViewModels;
+@model QuanLyTinVM;
+<style>
     body {
         font-family: Arial, sans-serif;
         background-color: #f9f9f9;
@@ -63,6 +65,7 @@
     .tab-content {
         margin-top: 20px;
     }
+
     .draft-item {
         display: flex;
         align-items: center;
@@ -87,23 +90,24 @@
         .draft-item .draft-info {
             flex-grow: 1;
         }
-       .draft-item .draft-info .title {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
 
-        .draft-item .draft-info .location {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 10px;
-        }
+            .draft-item .draft-info .title {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
 
-        .draft-item .draft-info .price {
-            font-size: 16px;
-            color: #28a745;
-            font-weight: bold;
-        }
+            .draft-item .draft-info .location {
+                font-size: 14px;
+                color: #888;
+                margin-bottom: 10px;
+            }
+
+            .draft-item .draft-info .price {
+                font-size: 16px;
+                color: #28a745;
+                font-weight: bold;
+            }
 
         .draft-item .actions button {
             width: 100%;
@@ -127,7 +131,7 @@
             justify-content: space-between;
         }
 
-       
+
     .tab-content {
         display: none;
     }
@@ -175,10 +179,10 @@
         </div>
     </div>
     <div class="profile-section mb-3">
-        <img alt="Profile picture of the user" height="50" src="https://storage.googleapis.com/a1aa/image/acaRLfnHE72BeEnppq4CRIqzb6m0CXUbHGHluRNONalbtR0TA.jpg" width="50" />
+        <img alt="Profile picture of the user" height="50" src="@Model.User.ImgUrl" width="50" />
         <div class="profile-info">
             <span class="name">
-                Trần Huỳnh Vũ
+                @Model.User.Name
             </span>
             <span class="create-store">
                 + Tạo cửa hàng
@@ -187,77 +191,168 @@
     </div>
     <ul class="nav nav-tabs mb-3" id="navTabs">
         <li class="nav-item">
-            <a class="nav-link active" data-tab="tab1" href="#">ĐANG HIỂN THỊ (0)</a>
+            <a class="nav-quan-ly-tin nav-link active" data-tab="tab1" href="#">ĐANG HIỂN THỊ (@Model.DA_DUYETS?.Count)</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-tab="tab2" href="#">HẾT HẠN (0)</a>
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab2" href="#">BỊ TỪ CHỐI (@Model.TU_CHOIS?.Count)</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-tab="tab3" href="#">BỊ TỪ CHỐI (0)</a>
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab3" href="#">CẦN THANH TOÁN (0)</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-tab="tab4" href="#">CẦN THANH TOÁN (0)</a>
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab4" href="#">CHỜ DUYỆT (@Model.CHO_DUYETS?.Count)</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-tab="tab5" href="#">TIN NHÁP (1)</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-tab="tab6" href="#">CHỜ DUYỆT (0)</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-tab="tab7" href="#">ĐÃ ẨN (0)</a>
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab5" href="#">ĐÃ ẨN (@Model.DA_ANS?.Count)</a>
         </li>
     </ul>
     <div class="tab-content active" id="tab1">
-        <p>Nội dung ĐANG HIỂN THỊ.</p>
+        @if (Model.DA_DUYETS.Count <= 0)
+        {
+            <p>Không có tin đăng ĐANG HIỂN THỊ.</p>
+        }
+        else
+        {
+            @foreach (var item in Model.DA_DUYETS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Title
+                        </div>
+                        <div class="location">
+                            @item.Description
+                        </div>
+                        <div class="price">
+                            $@item.Price
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnAnTin(this,@item.Id)" class="btn btn-danger mb-2">
+                            Ẩn
+                        </button>
+                        <a href="/user/product/edit/@item.Id"  class="btn btn-success">
+                            Sửa
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
     <div class="tab-content" id="tab2">
-        <p>Nội dung HẾT HẠN.</p>
+        @if (Model.TU_CHOIS.Count > 0)
+        {
+            @foreach (var item in Model.TU_CHOIS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Title
+                        </div>
+                        <div class="location">
+                            @item.Description
+                        </div>
+                        <div class="price">
+                            $@item.Price
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnXoaTin(this,@item.Id)" class="btn btn-danger mb-2">
+                            Xóa
+                        </button>
+                        <a href="/user/product/edit/@item.Id" class="btn btn-success">
+                            Sửa
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có tin đăng BỊ TỪ CHỐ.</p>
+        }
     </div>
     <div class="tab-content" id="tab3">
-        <p>Nội dung BỊ TỪ CHỐI.</p>
-    </div>
-    <div class="tab-content" id="tab4">
         <p>Nội dung CẦN THANH TOÁN.</p>
     </div>
+    <div class="tab-content" id="tab4">
+        @if (Model.CHO_DUYETS.Count > 0)
+        {
+            @foreach (var item in Model.CHO_DUYETS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Title
+                        </div>
+                        <div class="location">
+                            @item.Description
+                        </div>
+                        <div class="price">
+                            $@item.Price
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnXoaTin(this,@item.Id)" class="btn btn-danger mb-2">
+                            Xóa
+                        </button>
+                        <a href="/user/product/edit/@item.Id" class="btn btn-success">
+                            Sửa
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có tin đăng CHỜ DUYỆT.</p>
+        }
+    </div>
     <div class="tab-content" id="tab5">
-        <p>Nội dung TIN NHÁP.</p>
-        <div class="draft-item">
-            <img alt="Image of the draft item" height="100" src="https://storage.googleapis.com/a1aa/image/Y3wLUjJnPmZKOpHX7l5h50NTNOxveGYyfIQH3RBSHne6ajonA.jpg" width="100" />
-            <div class="draft-info">
-                <div class="title">
-                    (Chưa có tiêu đề)
+        @if (Model.DA_ANS.Count > 0)
+        {
+            @foreach (var item in Model.DA_ANS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Title
+                        </div>
+                        <div class="location">
+                            @item.Description
+                        </div>
+                        <div class="price">
+                            $@item.Price
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnXoaTin(this,@item.Id)" class="btn btn-danger mb-2">
+                            Xóa
+                        </button>
+                        <a href="/user/product/edit/@item.Id" class="btn btn-success">
+                            Sửa
+                        </a>
+                    </div>
                 </div>
-                <div class="location">
-                    Phường Hòa Khánh Nam, Quận Liên Chiểu, Đà Nẵng
-                </div>
-                <div class="price">
-                    1.200.000 đ
-                </div>
-            </div>
-            <div class="actions">
-                <button class="btn btn-danger mb-2">
-                    Xóa
-                </button>
-                <button class="btn btn-success">
-                    Tiếp tục đăng tin
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="tab-content" id="tab6">
-        <p>Nội dung CHỜ DUYỆT.</p>
-    </div>
-    <div class="tab-content" id="tab7">
-        <p>Nội dung ĐÃ ẨN.</p>
+            }
+        }
+        else
+        {
+            <p>Không có tin đăng ĐÃ ẨN.</p>
+        }
     </div>
 </div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Gắn sự kiện click vào các thẻ <a>
-            $(".nav-link").on("click", function (e) {
+
+            $(".nav-quan-ly-tin").on("click", function (e) {
                 e.preventDefault();
 
                 // Xóa lớp active khỏi tất cả các tab
@@ -269,7 +364,56 @@
                 const targetTab = $(this).data("tab");
                 $("#" + targetTab).addClass("active");
             });
-        });
+        });                  
+    </script>
+    <script>
+        function btnAnTin(btn,id) {
+            const $item = $(btn).closest('.draft-item')
+            $.ajax({
+                url: `/quanlytin/product/antin/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                            return;
+                        }
+                        toastr.success(response.message);
+                        $item.hide();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
+
+
+        function btnXoaTin(btn,id) {
+            const $item = $(btn).closest('.draft-item')
+            $.ajax({
+                url: `/quanlytin/product/xoatin/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                            return;
+                        }
+                        toastr.success(response.message);
+                        $item.hide();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
     </script>
 }
-

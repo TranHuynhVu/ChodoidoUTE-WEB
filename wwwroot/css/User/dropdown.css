@@ -1,10 +1,10 @@
-/* Các phần tử đã được cải tiến */
+
 .fixed-topbar {
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1030; /* Đảm bảo không bị che khuất */
+    z-index: 900; /* Đảm bảo không bị che khuất */
     width: 100%;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Tạo bóng cho thanh header */
 }
