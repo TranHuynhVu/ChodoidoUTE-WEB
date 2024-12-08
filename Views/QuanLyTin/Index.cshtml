@@ -390,28 +390,30 @@
                 }
             });
         }
-       
-        
-        // function btnEdit(id) {
-        //     $.ajax({
-        //         url: `/user/product/edit/${id}`,
-        //         type: 'GET',
-        //         success: function (response) {
-        //             if (response) {
-        //                 if (response.error) {
-        //                     toastr.error(response.message);
-        //                     return;
-        //                 }
-        //                 toastr.success(response.message);
-        //             } else {
-        //                 toastr.error(response.message);
-        //             }
-        //         },
-        //         error: function (xhr, status, error) {
-        //             alert('Đã xảy ra lỗi: ' + error);
-        //             toastr.error(error);
-        //         }
-        //     });
-        // }
+
+
+        function btnXoaTin(btn,id) {
+            const $item = $(btn).closest('.draft-item')
+            $.ajax({
+                url: `/quanlytin/product/xoatin/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                            return;
+                        }
+                        toastr.success(response.message);
+                        $item.hide();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
     </script>
 }
