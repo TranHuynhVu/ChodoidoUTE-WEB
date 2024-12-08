@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Chỉnh sửa danh mục";
+    var category = ViewBag.Category as ChodoidoUTE.Models.Category;
+}
+<div class="container-fluid mt-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-2 text-gray-800"><strong>Thông tin danh mục</strong></h1>
+    </div>
+    <p class="mb-4">Thông tin chi danh mục
+        <div class="row">
+            <!-- Column -->
+            <div class="col-lg-4 col-xlg-3 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <center class="m-t-30">
+                                @if (category.Url != null)
+                                {
+                                    <img class="img-profile" src="@category.Url" style="width: 350px; height: 350px; object-fit: cover; border-radius: 10px; image-rendering: auto;" />
+                                }
+                            <h4 class="card-title mt-3">@category.Name</h4>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <!-- Column end -->
+
+            <!-- Column start -->
+            <div class="col-lg-8 col-xlg-9 col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="form-horizontal form-material" action="/admin/category/edit/@category.Id" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="col-md-12">Mã danh mục</label>
+                                <div class="col-md-12">
+                                    <input class="form-control form-control-line" type="text" placeholder="Mã danh mục"  value="@category.Id" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Tên danh mục</label>
+                                <div class="col-md-12">
+                                    <input class="form-control form-control-line" type="text" placeholder="Tên danh mục" name="Name" value="@category.Name"/>
+                                </div>
+                            </div>
+                            <div class="form-group" upload-image>
+                                <label class="col-md-12">Ảnh danh mục</label>
+                                <div class="col-md-12">
+                                    <input class="form-control form-control-line" type="file" placeholder="Ảnh danh mục" name="Url" accept="image/*" upload-image-input />
+                                    <img id="thumbnailPreview" class="mt-2 ml-3" src="" alt="" upload-image-preview />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="fas fa-edit" style="margin-right: 5px;"></i> Cập nhật thông tin
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Column end -->
+        </div>
+    </p>
+</div>

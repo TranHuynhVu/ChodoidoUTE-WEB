@@ -1,0 +1,174 @@
+/* Các phần tử đã được cải tiến */
+.fixed-topbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030; /* Đảm bảo không bị che khuất */
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Tạo bóng cho thanh header */
+}
+
+.dropdown-menu {
+    max-height: 500px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Thêm thanh cuộn dọc khi cần */
+    overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+    scrollbar-width: thin; /* Tùy chọn: Giảm kích thước thanh cuộn (Firefox) */
+}
+
+    .dropdown-menu::-webkit-scrollbar {
+        width: 6px; /* Tùy chọn: Giảm kích thước thanh cuộn (Chrome, Edge, Safari) */
+    }
+
+    .dropdown-menu::-webkit-scrollbar-thumb {
+        background-color: #ccc; /* Màu thanh cuộn */
+        border-radius: 3px; /* Bo góc thanh cuộn */
+    }
+
+        .dropdown-menu::-webkit-scrollbar-thumb:hover {
+            background-color: #aaa; /* Màu thanh cuộn khi hover */
+        }
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.profile-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+}
+
+    .profile-header img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .profile-header .name {
+        font-weight: bold;
+    }
+
+    .profile-header .rating {
+        color: #f0ad4e;
+    }
+
+        .profile-header .rating i {
+            margin-right: 2px;
+        }
+
+.profile-info {
+    margin-top: 10px;
+}
+
+    .profile-info .info-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+        .profile-info .info-item .label {
+            color: #7c7a7a;
+        }
+
+        .profile-info .info-item .value {
+            font-weight: bold;
+        }
+
+.account-info {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+    .account-info .account-number {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .account-info .account-number .copy-btn {
+            color: #007bff;
+            cursor: pointer;
+        }
+
+    .account-info .recharge-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+.points-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+    .points-info .points-item {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        width: 48%;
+    }
+
+        .points-info .points-item .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+.order-management, .utilities {
+    margin-top: 20px;
+}
+
+    .order-management .title, .utilities .title {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .order-management .order-item, .utilities .utility-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+        .order-management .order-item i, .utilities .utility-item i {
+            margin-right: 10px;
+        }
+
+.custom-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary); /* Sử dụng màu primary đã định nghĩa */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+    .custom-button i {
+        margin-right: 8px; /* Khoảng cách giữa biểu tượng và văn bản */
+    }

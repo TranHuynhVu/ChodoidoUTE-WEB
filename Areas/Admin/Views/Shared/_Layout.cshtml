@@ -1,0 +1,50 @@
+﻿@{
+    var alertSuccess = TempData["SuccessMessage"] as string;
+    var alertError = TempData["ErrorMessage"] as string;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <link href="~/img/Icon_admin.png" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="~/css/Admin/style.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body id="page-top">
+    @Html.Partial("_AlertSuccess", alertSuccess)
+    @Html.Partial("_AlertError", alertError)
+    <div id="wrapper">
+        <partial name="~/Areas/Admin/Views/Shared/_Sidebar.cshtml" />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <partial name="~/Areas/Admin/Views/Shared/_Header.cshtml" />
+                @RenderBody()
+            </div>
+            <partial name="~/Areas/Admin/Views/Shared/_Footer.cshtml" />
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/file-upload-with-preview/6.1.2/index.iife.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.dataTables.min.js"></script>
+    <script src="~/js/Admin/main.js" defer></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
