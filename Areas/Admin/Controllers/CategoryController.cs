@@ -9,7 +9,6 @@ using System.Drawing;
 namespace ChodoidoUTE.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
@@ -77,7 +76,7 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
         }
 
         [Route("admin/category/edit/{id}")]
-        public async Task<IActionResult> Edit(long id)
+        public async Task<IActionResult> Edit(int id)
         {
             var category= await _context.Categories.FindAsync(id);
             ViewBag.Category = category;
@@ -85,7 +84,7 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
         }
         [Route("admin/category/edit/{id}")]
         [HttpPost]
-        public async Task<IActionResult> EditCategory(long id, String Name, IFormFile Url)
+        public async Task<IActionResult> EditCategory(int id, String Name, IFormFile Url)
         {
             var category = await _context.Categories.FindAsync(id);
             if (category == null)
@@ -132,7 +131,7 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
         }
         [Route("admin/category/delete/{id}")]
         [HttpPatch]
-        public async Task<IActionResult> DeleteCategory(long id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
             if (category == null)
