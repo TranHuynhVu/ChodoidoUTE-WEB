@@ -25,6 +25,11 @@
     <Folder Include="Areas\User\Views\Shared\" />
     <Folder Include="Migrations\" />
     <Folder Include="Api\" />
+    <Folder Include="Api\Admin\" />
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="wwwroot\css\Admin\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\videos\" />
   </ItemGroup>
 
 </Project>
