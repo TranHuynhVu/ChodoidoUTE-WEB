@@ -1,4 +1,4 @@
-﻿@using ChodoidoUTE.ViewModels;
+﻿﻿@using ChodoidoUTE.ViewModels;
 @model QuanLyTinVM;
 <style>
     body {
@@ -232,7 +232,7 @@
                         <button onclick="btnAnTin(this,@item.Id)" class="btn btn-danger mb-2">
                             Ẩn
                         </button>
-                        <a href="/user/product/edit/@item.Id"  class="btn btn-success">
+                        <a href="/user/product/edit/@item.Id" class="btn btn-success">
                             Sửa
                         </a>
                     </div>
@@ -364,10 +364,10 @@
                 const targetTab = $(this).data("tab");
                 $("#" + targetTab).addClass("active");
             });
-        });                  
+        });
     </script>
     <script>
-        function btnAnTin(btn,id) {
+        function btnAnTin(btn, id) {
             const $item = $(btn).closest('.draft-item')
             $.ajax({
                 url: `/quanlytin/product/antin/${id}`,
@@ -392,7 +392,7 @@
         }
 
 
-        function btnXoaTin(btn,id) {
+        function btnXoaTin(btn, id) {
             const $item = $(btn).closest('.draft-item')
             $.ajax({
                 url: `/quanlytin/product/xoatin/${id}`,

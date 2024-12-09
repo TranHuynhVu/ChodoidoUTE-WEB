@@ -1,0 +1,240 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<AppUser> userManager;
+@inject SignInManager<AppUser> signManager;
+@{
+    var user = await userManager.GetUserAsync(User);
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+    }
+
+    .container {
+        display: flex;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 800px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-right: 20px;
+    }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .sidebar ul li {
+                margin-bottom: 15px;
+            }
+
+                .sidebar ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-weight: bold;
+                }
+
+                    .sidebar ul li a:hover {
+                        color: #ff9900;
+                    }
+
+    /* Main content */
+    .main-content {
+        flex: 3;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff9900;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .form-group button:hover {
+                background-color: #e68a00;
+            }
+</style>
+
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="/chinh-sua">Thông tin cá nhân</a></li>
+            <li><a href="/mang-xa-hoi">Liên kết mạng xã hội</a></li>
+            <li><a href="/password/edit">Cài đặt tài khoản</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Liên kết mạng xã hội</h1>
+        <form id="social-media-form">
+            <!-- Chọn mạng xã hội -->
+            <div class="form-group">
+                <label for="social-media-select">Chọn mạng xã hội</label>
+                <select id="social-media-select" name="SocialMedia">
+                    <option value="Email">Email</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="Linkedin">LinkedIn</option>
+                    <option value="Instagram">Instagram</option>
+                </select>
+            </div>
+
+            <!-- Nhập link tài khoản -->
+            <div class="form-group">
+                <label for="social-media-link">Đường dẫn</label>
+                <input type="text" id="social-media-link" name="SocialMediaUrl" placeholder="Nhập đường dẫn hoặc email" required>
+            </div>
+
+            <!-- Nút thêm -->
+            <div class="form-group">
+                <button type="button" id="add-social-btn">THÊM LIÊN KẾT</button>
+            </div>
+        </form>
+
+
+        <div class="social-list" id="social-list">
+            <h2>Danh sách liên kết</h2>
+            @if (user.Facebook != null)
+            {
+                <div class="social-item">
+                    <p><strong>Facebook:</strong> @user.Facebook</p>
+                    <button class="delete-btn" data-social="Facebook">Xóa</button>
+                </div>
+            }
+          @*   @if (user.Instagram != null)
+            {
+                <div class="social-item">
+                    <p><strong>Instagram:</strong> @user.Instagram</p>
+                    <button class="delete-btn" data-social="Instagram">Xóa</button>
+                </div>
+            } *@
+            <!-- Thêm các mạng xã hội khác nếu có -->
+        </div>
+
+    </div>
+</div>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const socialMedia = button.getAttribute('data-social');
+
+                // Xác nhận trước khi xóa
+                if (confirm(`Bạn có chắc chắn muốn xóa ${socialMedia}?`)) {
+                    $.ajax({
+                        url: '/mang-xa-hoi/delete',
+                        type: 'POST',
+                        data: { SocialMedia: socialMedia },
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                                // Xóa item khỏi danh sách
+                                button.parentElement.remove();
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Có lỗi xảy ra. Vui lòng thử lại.");
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    const socialMediaSelect = document.getElementById('social-media-select');
+    const socialMediaLinkField = document.getElementById('social-media-link');
+    const addSocialBtn = document.getElementById('add-social-btn');
+    const socialList = document.getElementById('social-list');
+
+    addSocialBtn.addEventListener('click', () => {
+        const socialMedia = socialMediaSelect.value;
+        const link = socialMediaLinkField.value.trim();
+
+        if (link === '') {
+            alert('Vui lòng nhập đường dẫn hoặc email!');
+            return;
+        }
+
+        // Gửi yêu cầu AJAX tới controller
+        $.ajax({
+            url: '/mang-xa-hoi/edit',
+            type: 'POST',
+            data: {
+                SocialMedia: socialMedia,
+                SocialMediaUrl: link
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Tạo item mới và thêm vào danh sách
+                    const socialItem = document.createElement('div');
+                    socialItem.classList.add('social-item');
+                    socialItem.innerHTML = `
+                        <p><strong>${socialMedia.toUpperCase()}:</strong> ${link}</p>
+                        <button class="delete-btn">Xóa</button>
+                    `;
+
+                    // Thêm sự kiện xóa
+                    socialItem.querySelector('.delete-btn').addEventListener('click', () => {
+                        socialItem.remove();
+                    });
+
+                    // Thêm vào danh sách
+                    socialList.appendChild(socialItem);
+
+                    // Xóa nội dung input sau khi thêm
+                    socialMediaLinkField.value = '';
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert("Có lỗi xảy ra. Vui lòng thử lại.");
+            }
+        });
+    });
+
+</script>

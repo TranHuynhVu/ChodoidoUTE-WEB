@@ -20,7 +20,9 @@ namespace ChodoidoUTE.Models
         public int? ProductSuccess { get; set; }
         public string? Role { get; set; } // ADMIN, USER
         public string? Zalo { get; set; }
-
+        public string? Cccd { get; set; }
+        public string? TaxNumber { get; set; }
+        public string? Address { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Buy> Buys { get; set; }
         public virtual ICollection<Follower> Followers { get; set; }

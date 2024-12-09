@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+            .item img {
+                width: 80px;
+                height: auto;
+                margin-right: 15px;
+                border-radius: 4px;
+            }
+
+            .item h2 {
+                font-size: 16px;
+                color: #333;
+                margin: 0;
+            }
+
+            .item p {
+                font-size: 14px;
+                color: #555;
+                margin: 5px 0 0;
+            }
+
+        .total {
+            font-size: 16px;
+            background-color: #f7f7f7;
+            padding: 10px 15px;
+            border-radius: 4px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods {
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+            .payment-method:last-child {
+                border-bottom: none;
+            }
+
+            .payment-method input[type="radio"] {
+                margin-right: 10px;
+                accent-color: #007bff;
+            }
+
+            .payment-method label {
+                flex: 1;
+                font-size: 14px;
+                color: #333;
+            }
+
+            .payment-method img {
+                width: 25px;
+                height: 25px;
+            }
+
+        .checkout-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .checkout-button:hover {
+                background-color: #218838;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Thanh toán</h1>
+
+        <div class="item">
+            <img src="https://i.imgur.com/Q6N0o4v.jpg" alt="Item image">
+            <div>
+                <h2>Giáo trình lập trình web nâng cao</h2>
+                <p>Giá: 15,000 ₫</p>
+            </div>
+        </div>
+
+        <div class="total">
+            Tổng cộng: 15,000 ₫
+        </div>
+
+        <div class="payment-methods">
+            <form class="payment-method">
+                <input type="radio" id="dongtot" name="payment-method" value="dongtot">
+                <label for="dongtot">Đồng Tốt</label>
+                <img src="../Resources/ic_coin.png" alt="Dong Tot Icon">
+            </form>
+            <form class="payment-method">
+                <input type="radio" id="domestic" name="payment-method" value="domestic">
+                <label for="domestic">Thẻ Ngân Hàng Nội Địa</label>
+                <img src="../Resources/ic_card.png" alt="Domestic Icon">
+            </form>
+            <form class="payment-method">
+                <input type="radio" id="international" name="payment-method" value="international">
+                <label for="international">Thẻ Quốc Tế</label>
+                <img src="../Resources/ic_card.png" alt="International Icon">
+            </form>
+            <form method="post" asp-action="CreatePaymentMomo" asp-controller="Payment" class="payment-method" id="momo-form" >
+                <input type="radio" id="momo" name="payment-method" value="momo">
+                <label for="momo">Ví Momo</label>
+                <img src="../Resources/ic_wallet.png" alt="Momo Icon">
+                <input type="hidden" name="Amount" value="1000" />
+                <input type="hidden" name="OrderInfo" value="Thanh toán momo cho đơn hàng" />
+                <input type="hidden" name="OrderId" value="@Guid.NewGuid().GetType()" />
+                <input type="hidden" name="FullName" value="Vu Tran" />
+            </form>
+            <form class="payment-method">
+                <input type="radio" id="cash" name="payment-method" value="cash">
+                <label for="cash">Tiền mặt</label>
+                <img src="../Resources/ic_cash.png" alt="Momo Icon">
+            </form>
+        </div>
+
+        <button class="checkout-button">Thanh toán</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lấy nút thanh toán
+            const checkoutButton = document.querySelector('.checkout-button');
+
+            checkoutButton.addEventListener('click', function () {
+                // Lấy danh sách tất cả các radio button
+                const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+                let selectedMethod = null;
+
+                // Tìm phương thức được chọn
+                paymentMethods.forEach(method => {
+                    if (method.checked) {
+                        selectedMethod = method.value;
+                    }
+                });
+
+                // Kiểm tra nếu không có phương thức nào được chọn
+                if (!selectedMethod) {
+                    alert('Vui lòng chọn một phương thức thanh toán!');
+                    return;
+                }
+
+                // Nếu phương thức được chọn là "momo", submit form tương ứng
+                if (selectedMethod === 'momo') {
+                    const momoForm = document.querySelector('form[method="post"]');
+                    momoForm.submit();
+                } else {
+                    alert(`Phương thức thanh toán "${selectedMethod}" chưa được hỗ trợ.`);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

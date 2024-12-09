@@ -35,9 +35,12 @@
         </div>
         @if (signManager.IsSignedIn(User))
         {
-            <div class="col-lg-4 col-6 btn text-md-right dropdown" data-toggle="dropdown">
-                <img src="@user.ImgUrl" alt="@user.Name" class="user-avatar" />
-                <span class="h6 ml-2 font-weight-bold text-dark">@user.Name</span>
+            <div class="col-lg-4 col-6 btn text-md-right dropdown">
+                <div data-toggle="dropdown">
+                    <img src="@user.ImgUrl" alt="@user.Name" class="user-avatar" />
+                    <span class="h6 ml-2 font-weight-bold text-dark">@user.Name</span>
+                </div>
+             
                 <div class="profile-card dropdown-menu dropdown-menu-right  bg-light">
                     <div class="profile-header">
                         <img alt="Profile picture of the user" height="50" src="@user.ImgUrl" width="50" />
