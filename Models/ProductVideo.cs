@@ -1,14 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChodoidoUTE.Models
 {
     public class ProductVideo
     {
         [Key]
-        public long Id { get; set; }
-        public string VideoUrl { get; set; }
-        public long? IdProduct { get; set; }
+        public int Id { get; set; }
+        public string? VideoUrl { get; set; }
+        public int? ProductId { get; set; }
 
+        [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
     }
 }

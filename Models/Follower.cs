@@ -6,8 +6,9 @@ namespace ChodoidoUTE.Models
     public class Follower
     {
         [Key]
-        public long Id { get; set; }
-        public long? IdUser { get; set; }
-        public virtual User User { get; set; }
+        public int Id { get; set; }
+        public string? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual AppUser User { get; set; }
     }
 }

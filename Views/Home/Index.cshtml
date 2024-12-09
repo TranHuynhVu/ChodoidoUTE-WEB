@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using ChodoidoUTE.ViewModels;
+@inject ChodoidoUTE.Services.Interface.IProduct _product;
+@{
+    List<ItemProductVM> productVMs = await _product.GetProductVMByStatus("DA_DUYET");
+}
 <!-- Slide -->
 <div class="container-fluid mb-3">
     <partial name="_slide"></partial>
@@ -12,201 +17,37 @@
 <div class="container-fluid pt-5 pb-3">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Tin đăng</span></h2>
     <div class="row px-xl-5">
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-5.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="/detail">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
-                        </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
+        @foreach(var item in productVMs)
+        {
+            <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4 p-3">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="@item.Images[0].UrlImg" alt="">
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a id="yeu-thich-product" class="btn btn-outline-dark btn-square" onclick="ProductYeuThich(@item.Id)"><i class="far fa-heart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-5.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
+                    <div class="text-left mt-3">
+                        <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" onclick="showDetailProduc(@item.Id)">@item.Title</a>
+                        <div class="d-flex align-items-left mt-2">
+                            <h6>$@item.Price</h6>
                         </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
+                        <div class="d-flex justify-content-between mt-3 ">
+                            <div class="user-icon mr-3 d-flex justify-content-between">
+                                <img src="@item.User.ImgUrl" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
+                                <span style="font-size: 10px; font-weight: bold;">@item.User.Name</span>
+                            </div>
+                            <div class="product-time d-flex justify-content-between">
+                                <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;"> @item.TimePost?.ToString("dd/MM/yyyy")</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-4.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
-                        </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-3.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
-                        </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-2.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
-                        </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-1.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
-                        </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4 p-3">
-                <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/img/product-12.jpg" alt="">
-                    <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-                <div class="text-left mt-3">
-                    <a style="font-size: 12px;" class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                    <div class="d-flex align-items-left mt-2">
-                        <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$150.00</del></h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3 ">
-                        <div class="user-icon mr-3 d-flex justify-content-between">
-                            <img src="~/img/user.jpg" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                            <span style="font-size: 10px; font-weight: bold;">by John Doe</span>
-                        </div>
-                        <div class="product-time d-flex justify-content-between">
-                            <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;">2 days ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
+        
     </div>
 </div>
