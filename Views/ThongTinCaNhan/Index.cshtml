@@ -1,0 +1,182 @@
+﻿
+<style>
+    .container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile {
+        display: flex;
+        gap: 20px;
+    }
+
+    .left-panel {
+        flex: 3;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-panel {
+        flex: 7;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background: #666;
+        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .profile-info h2 {
+        text-align: center;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        background: #ff9900;
+        color: rgba(0, 0, 0, 0.655);
+        cursor: pointer;
+    }
+
+    .tabs button:hover {
+        border-bottom: 2px solid #ff9900;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tab {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-bottom: 2px solid transparent;
+        background: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .tab.active {
+            background: #e68a00;
+        }
+
+    .content {
+        text-align: center;
+        padding: 20px;
+        background-color: #fafafa;
+        border: 1px dashed #ddd;
+        border-radius: 8px;
+    }
+
+    .post-now {
+        background-color: #ff9900;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+<div class="container">
+    <div class="profile">
+        <section class="left-panel">
+            <div class="avatar">
+                <div class="avatar-circle">Z</div>
+            </div>
+            <div class="profile-info">
+                <h2>ZEQ</h2>
+                <p>Chưa có đánh giá</p>
+                <p>Người theo dõi: <b>0</b> | Đang theo dõi: <b>0</b></p>
+                <a href="/chinh-sua" class="button">Chỉnh sửa trang cá nhân</a>
+            </div>
+            <div class="additional-info">
+                <p>Phản hồi chat: <span>Chưa có thông tin</span></p>
+                <p>Đã tham gia: <span>1 ngày</span></p>
+                <p>
+                    Đã xác thực:
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-regular fa-envelope"></i></a>
+                    <a href="#"><i class="fa-solid fa-phone"></i></a>
+                </p>
+                <p>Địa chỉ: <span>Chưa cung cấp</span></p>
+            </div>
+        </section>
+        <section class="main-panel">
+            <div class="tabs">
+                <button class="tab active">Đang hiển thị (0)</button>
+                <button class="tab">Đã bán (0)</button>
+            </div>
+            <div class="content">
+                <p>Bạn chưa có tin đăng nào</p>
+                <button class="post-now">ĐĂNG TIN NGAY</button>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    // Lấy tất cả các tab và phần nội dung
+    const tabs = document.querySelectorAll('.tab');
+    const content = document.querySelector('.content');
+
+    // Nội dung HTML thay đổi theo từng tab
+    const tabContent = {
+        "Đang hiển thị (0)": `
+                    <div class="listing">
+                        <h2>Không có tin đăng nào</h2>
+                        <p>Bạn có thể nhấn vào nút bên dưới để đăng tin mới.</p>
+                        <button class="post-now">ĐĂNG TIN NGAY</button>
+                    </div>
+                `,
+        "Đã bán (0)": `
+                    <div class="sold-items">
+                        <h2>Không có sản phẩm đã bán</h2>
+                        <p>Bạn chưa bán bất kỳ sản phẩm nào. Hãy thử đăng sản phẩm!</p>
+                        <button class="post-now">ĐĂNG SẢN PHẨM</button>
+                    </div>
+                `,
+    };
+
+    // Xử lý sự kiện khi click vào tab
+    tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+            // Xóa lớp 'active' khỏi tất cả các tab
+            tabs.forEach((t) => t.classList.remove('active'));
+
+            // Thêm lớp 'active' cho tab được nhấn
+            tab.classList.add('active');
+
+            // Cập nhật nội dung HTML trong phần content
+            content.innerHTML = tabContent[tab.textContent];
+        });
+    });
+</script>
+
+
+

@@ -31,11 +31,11 @@ namespace ChodoidoUTE.Controllers
             ItemProductVM itemProductVM = await _product.GetProductVM(id);
             return PartialView("~/Views/Home/Detail.cshtml", itemProductVM);
         }
-        [Route("/thong-tin-ca-nhan")]
-        public IActionResult ThongTinCaNhan()
+
+        [Route("/thanh-toan")]
+        public IActionResult ThanhToan()
         {
             return View();
         }
-
     }
 }

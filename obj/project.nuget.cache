@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gwSFM5j+nok=",
+  "dgSpecHash": "u6lt6xdrBDg=",
   "success": true,
   "projectFilePath": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\ChodoidoUTE.csproj",
   "expectedPackageFiles": [
@@ -164,6 +164,7 @@
     "C:\\Users\\FPT-DEMO\\.nuget\\packages\\nuget.projectmodel\\6.11.0\\nuget.projectmodel.6.11.0.nupkg.sha512",
     "C:\\Users\\FPT-DEMO\\.nuget\\packages\\nuget.protocol\\6.11.0\\nuget.protocol.6.11.0.nupkg.sha512",
     "C:\\Users\\FPT-DEMO\\.nuget\\packages\\nuget.versioning\\6.11.0\\nuget.versioning.6.11.0.nupkg.sha512",
+    "C:\\Users\\FPT-DEMO\\.nuget\\packages\\restsharp\\112.1.0\\restsharp.112.1.0.nupkg.sha512",
     "C:\\Users\\FPT-DEMO\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\FPT-DEMO\\.nuget\\packages\\system.codedom\\5.0.0\\system.codedom.5.0.0.nupkg.sha512",
     "C:\\Users\\FPT-DEMO\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",

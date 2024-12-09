@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Bqk+9ld2BGTsi91WIKbq7aaXC9ILXpM5HTUoVF8fQ7M=",
+  "Hash": "TBgrY2XlhCGy9QKZxA6MXJqc5H+KE2Kr/LDnv2U+m60=",
   "Source": "ChodoidoUTE",
   "BasePath": "_content/ChodoidoUTE",
   "Mode": "Default",
@@ -1478,6 +1478,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\507c0d65-8895-4d75-860c-5d5d26e34c35.png"
+    },
+    {
+      "Identity": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\images\\9d9fc64f-d3fb-4c0d-bb57-c5a01410f219.png",
+      "SourceId": "ChodoidoUTE",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\",
+      "BasePath": "_content/ChodoidoUTE",
+      "RelativePath": "images/9d9fc64f-d3fb-4c0d-bb57-c5a01410f219.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\9d9fc64f-d3fb-4c0d-bb57-c5a01410f219.png"
     },
     {
       "Identity": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\img\\carousel-1.jpg",
@@ -5259,6 +5278,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\videos\\26e3a012-e10f-4f1d-a537-bc18b402b934.mp4"
+    },
+    {
+      "Identity": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\videos\\3f8e4704-7604-472d-88f6-d7ce83b890c4.mp4",
+      "SourceId": "ChodoidoUTE",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\",
+      "BasePath": "_content/ChodoidoUTE",
+      "RelativePath": "videos/3f8e4704-7604-472d-88f6-d7ce83b890c4.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\videos\\3f8e4704-7604-472d-88f6-d7ce83b890c4.mp4"
     },
     {
       "Identity": "D:\\ASP.NET\\WEB\\ChodoidoUTE\\ChodoidoUTE\\wwwroot\\videos\\8954f85e-fb90-4959-835a-fd55dd187662.mp4",

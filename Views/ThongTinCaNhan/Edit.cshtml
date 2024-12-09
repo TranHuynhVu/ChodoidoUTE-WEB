@@ -1,0 +1,153 @@
+﻿@model ChodoidoUTE.ViewModels.ProfileVM
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+    }
+
+    .container {
+        display: flex;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-right: 20px;
+    }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .sidebar ul li {
+                margin-bottom: 15px;
+            }
+
+                .sidebar ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-weight: bold;
+                }
+
+                    .sidebar ul li a:hover {
+                        color: #ff9900;
+                    }
+
+    /* Main content */
+    .main-content {
+        flex: 3;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-group small {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .form-group button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff9900;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .form-group button:hover {
+                background-color: #e68a00;
+            }
+</style>
+
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="/chinh-sua">Thông tin cá nhân</a></li>
+            <li><a href="/mang-xa-hoi">Liên kết mạng xã hội</a></li>
+            <li><a href="/password/edit">Cài đặt tài khoản</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Thông tin cá nhân</h1>
+        <form action="/profile/edit" method="post">
+            <!-- Họ và Tên -->
+            <div class="form-group">
+                <label for="name">Họ và tên</label>
+                <input type="text" id="name" name="Name" value="@Model.Name" placeholder="Nhập họ và tên của bạn">
+            </div>
+
+            <!-- Số điện thoại -->
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="tel" id="phone" name="PhoneNumber" value=" @Model.PhoneNumber" placeholder="Nhập số điện thoại">
+            </div>
+
+             <!-- Địa chỉ -->
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" name="Address" value="@Model.Address" placeholder="Nhập địa chỉ của bạn">
+            </div>
+
+            <!-- Thông tin bảo mật -->
+            <h2>Thông tin bảo mật</h2>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" value="@Model.Email" placeholder="Nhập email của bạn">
+            </div>
+            <div class="form-group">
+                <label for="cccd">CCCD</label>
+                <input type="text" id="cccd" name="Cccd" value="@Model.Cccd" placeholder="Nhập thông tin CCCD / CMND">
+            </div>
+            <div class="form-group">
+                <label for="tax">Mã số thuế</label>
+                <input type="text" id="tax" name="TaxNumber" value="@Model.TaxNumber" placeholder="Nhập mã số thuế (nếu có)">
+            </div>
+            <input type="hidden" name="Id" value="@Model.Id">
+            <!-- Lưu thay đổi -->
+            <div class="form-group">
+                <button type="submit">LƯU THAY ĐỔI</button>
+            </div>
+        </form>
+    </div>
+</div>

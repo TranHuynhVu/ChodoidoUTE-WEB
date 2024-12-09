@@ -66,8 +66,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/Home/ThongTinCaNhan.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaG9uZ1RpbkNhTmhhbi5jc2h0bWw=
+[D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/Home/ThanhToan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaGFuaFRvYW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/QuanLyTin/Index.cshtml]
@@ -104,6 +104,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/ThongTinCaNhan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhvbmdUaW5DYU5oYW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/ThongTinCaNhan/EditPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhvbmdUaW5DYU5oYW5cRWRpdFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/ThongTinCaNhan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhvbmdUaW5DYU5oYW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/ThongTinCaNhan/Mxh.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhvbmdUaW5DYU5oYW5cTXhoLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ASP.NET/WEB/ChodoidoUTE/ChodoidoUTE/Views/_ViewImports.cshtml]

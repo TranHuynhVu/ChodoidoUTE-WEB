@@ -9,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Lấy chuỗi kết nối từ configuration
 var connectionString = builder.Configuration.GetConnectionString("default");
+// kết nối MOMOAPI
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 
 // Thêm các dịch vụ cần thiết
 builder.Services.AddControllersWithViews()

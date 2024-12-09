@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChodoidoUTE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1a7ef898aabd2e3d332abf8d28a9c24e1929604")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71e3215d74033501ec683bb4661b55395b4d9395")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChodoidoUTE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChodoidoUTE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
