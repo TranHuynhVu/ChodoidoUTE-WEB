@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChodoidoUTE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f090bd1466201e4f26cd9f759a6ed7cd9243b52c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c4691b4efb4d6a66b801440850083224e7b5eebf")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChodoidoUTE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChodoidoUTE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

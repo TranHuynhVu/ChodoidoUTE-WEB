@@ -1,0 +1,17 @@
+﻿@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    <div class="alert alert-success show-alert" role="alert">
+        <strong>@Model</strong>
+        <button style="margin-left:10px" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            $('.show-alert').addClass('hidden');
+        }, 3000);
+    </script>
+}

@@ -13,6 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("default");
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
 builder.Services.AddScoped<IMomoService, MomoService>();
 
+
 // Thêm các dịch vụ cần thiết
 builder.Services.AddControllersWithViews()
     .AddDataAnnotationsLocalization();  // Thêm hỗ trợ localize cho DataAnnotations
@@ -23,7 +24,8 @@ builder.Services.AddScoped<ICategory, ItemCategoryService>();
 builder.Services.AddScoped<IProduct, ItemProductService>();
 builder.Services.AddScoped<IChats, ItemChatsService>();
 builder.Services.AddScoped<IUser, ItemUserService>();
-// Cấu hình DbContext để sử dụng SQL Server
+
+
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString));
 
@@ -72,5 +74,14 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "AdminLogin",
+    pattern: "/admin/login",
+    defaults: new { controller = "Account", action = "AdminLogin" });
+
+app.MapControllerRoute(
+    name: "MyArea",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
