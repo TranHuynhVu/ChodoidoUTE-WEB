@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Lấy chuỗi kết nối từ configuration
 var connectionString = builder.Configuration.GetConnectionString("default");
-
 // Thêm các dịch vụ cần thiết
 builder.Services.AddControllersWithViews()
     .AddDataAnnotationsLocalization();  // Thêm hỗ trợ localize cho DataAnnotations
@@ -20,7 +19,8 @@ builder.Services.AddScoped<ICategory, ItemCategoryService>();
 builder.Services.AddScoped<IProduct, ItemProductService>();
 builder.Services.AddScoped<IChats, ItemChatsService>();
 builder.Services.AddScoped<IUser, ItemUserService>();
-// Cấu hình DbContext để sử dụng SQL Server
+
+
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString));
 
