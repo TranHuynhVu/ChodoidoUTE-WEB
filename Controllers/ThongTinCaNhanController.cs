@@ -55,7 +55,9 @@ namespace ChodoidoUTE.Controllers
                 user.Email = profileVM.Email;
                 user.UserName = profileVM.Email;
                 user.Name = profileVM.Name;
+                user.Address = profileVM.Address;
                 user.PhoneNumber = profileVM.PhoneNumber;
+                user.Cccd = profileVM.Cccd;
                 user.TaxNumber = profileVM.TaxNumber;
 
                 var result = await _userManager.UpdateAsync(user);
@@ -69,7 +71,7 @@ namespace ChodoidoUTE.Controllers
             return View(profileVM);
         }
         [Route("/mang-xa-hoi")]
-        public async Task<ActionResult> Mxh()
+        public ActionResult Mxh()
         {
             return View();
         }
