@@ -61,19 +61,7 @@ namespace ChodoidoUTE.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-        [Route("/donhang/huy/{id}")]
-        public async Task<IActionResult> Huydon(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var buy = await _context.Buys.FindAsync(id);
-            if (buy != null)
-            {
-                buy.Status = "DA_HUY";
-                await _context.SaveChangesAsync();
-                return Json(new { error = false, message = "Hủy đơn hàng thành công" });
-            }
-            return Json(new { error = true, message = "Hủy đơn hàng thất bại" });
-        }
+        
         [HttpPost("/donhang/danhgia")]
         public async Task<IActionResult> DanhGia([FromBody] RateStar request)
         {
@@ -109,32 +97,6 @@ namespace ChodoidoUTE.Controllers
             var donban = await _donHang.GetDonBans(user.Id);
             return View(donban);
         }
-        [Route("/donhang/xacnhan/{id}")]
-        public async Task<IActionResult> XacNhan(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var buy = await _context.Buys.FindAsync(id);
-            if (buy != null)
-            {
-                buy.Status = "CAN_THANH_TOAN";
-                await _context.SaveChangesAsync();
-                return Json(new { error = false, message = "Xác nhận đơn hàng thành công" });
-            }
-            return Json(new { error = true, message = "Xác nhận đơn hàng thất bại" });
-        }
-
-        [Route("/donhang/xacnhanthanhtoan/{id}")]
-        public async Task<IActionResult> XacNhanThanhToan(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var buy = await _context.Buys.FindAsync(id);
-            if (buy != null)
-            {
-                buy.Status = "HOAN_TAT";
-                await _context.SaveChangesAsync();
-                return Json(new { error = false, message = "Xác nhận thanh toán đơn hàng thành công" });
-            }
-            return Json(new { error = true, message = "Xác nhận thanh toán đơn hàng thất bại" });
-        }
+       
     }
 }

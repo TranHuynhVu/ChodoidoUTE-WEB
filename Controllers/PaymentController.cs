@@ -67,11 +67,11 @@ namespace ChodoidoUTE.Controllers
                 _context.Buys.Update(buy);
                 await _context.SaveChangesAsync();
                 TempData["success"] = "Chờ xác nhận thanh toán";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "QuanLyTin");
             }
             TempData["error"] = "Lỗi thanh toán";
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "QuanLyTin");
         }
         [Route("/thanh-toan/{id}")]
         public async Task<IActionResult> ThanhToan(int id)
