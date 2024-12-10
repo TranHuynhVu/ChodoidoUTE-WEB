@@ -16,6 +16,7 @@ namespace ChodoidoUTE.Models
         public string? Password { get; set; }
         public int? Status {  get; set; }
         public int? Point { get; set; }
+        public int? LuotDang { get; set; }
         public int? ProductLost { get; set; }
         public int? ProductSuccess { get; set; }
         public string? Role { get; set; } // ADMIN, USER

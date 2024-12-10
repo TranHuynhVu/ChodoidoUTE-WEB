@@ -168,5 +168,10 @@ namespace ChodoidoUTE.Controllers
             return Json(new { success = false, errors });
         }
 
+        [Route("/danh-gia")]
+        public IActionResult DanhGia()
+        {
+            return View();
+        }
     }
 }

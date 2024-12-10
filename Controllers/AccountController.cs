@@ -64,7 +64,7 @@ namespace ChodoidoUTE.Controllers
                         var role = await _userManager.GetRolesAsync(user);
                         if (role.Contains("Admin"))
                         {
-                            return RedirectToAction("Index", "Home", new { area = "Admin" });
+                            return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
                         }
                         else if (role.Contains("User"))
                         {

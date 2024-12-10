@@ -24,7 +24,8 @@ builder.Services.AddScoped<ICategory, ItemCategoryService>();
 builder.Services.AddScoped<IProduct, ItemProductService>();
 builder.Services.AddScoped<IChats, ItemChatsService>();
 builder.Services.AddScoped<IUser, ItemUserService>();
-
+builder.Services.AddScoped<IThanhToan, ItemThanhToanService>();
+builder.Services.AddScoped<IDonHang, ItemDonHangService>();
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString));

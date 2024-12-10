@@ -30,7 +30,6 @@
 	<Folder Include="Areas\User\Controller\" />
     <Folder Include="Areas\User\Views\Shared\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Api\" />
     <Folder Include="wwwroot\css\Admin\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

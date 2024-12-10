@@ -1,0 +1,425 @@
+﻿﻿@using ChodoidoUTE.ViewModels;
+@model DonBanVM;
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    .container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+
+    .profile-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .profile-section img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile-section .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .profile-section .profile-info .name {
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .profile-section .profile-info .create-store {
+                color: #007bff;
+                cursor: pointer;
+            }
+
+    .nav-tabs .nav-item {
+        margin-right: 5px;
+    }
+
+    .nav-tabs .nav-link {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #f5f5f5;
+            color: #ff9800;
+        }
+
+        .nav-tabs .nav-link.active {
+            border-color: #ff9800;
+            color: #fff;
+            background-color: #ff9800;
+        }
+
+    .tab-content {
+        margin-top: 20px;
+    }
+
+    .draft-item {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .draft-item:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .draft-item img {
+            border-radius: 8px;
+            margin-right: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .draft-item .draft-info {
+            flex-grow: 1;
+        }
+
+            .draft-item .draft-info .title {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .draft-item .draft-info .location {
+                font-size: 14px;
+                color: #888;
+                margin-bottom: 10px;
+            }
+
+            .draft-item .draft-info .price {
+                font-size: 16px;
+                color: #28a745;
+                font-weight: bold;
+            }
+
+        .draft-item .actions button {
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .draft-item .actions .btn-success {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .draft-item .actions .btn-success:hover {
+                background-color: #218838;
+            }
+
+        .draft-item .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+
+    .tab-content {
+        display: none;
+    }
+
+        .tab-content.active {
+            display: block;
+        }
+          /* CSS cho modal và sao */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        width:300px;
+    }
+    .rating-stars .star {
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccc;
+    }
+    .rating-stars .star.selected {
+        color: #f39c12;
+    }
+</style>
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <a class="text-decoration-none text-primary" href="/dao-cho">
+                Chợ Tốt
+            </a>
+            &gt;
+            <span>
+                Đơn mua
+            </span>
+        </div>
+        <div>
+            <button class="btn btn-outline-danger">
+                Có gì mới
+            </button>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-3" id="navTabs">
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link active" data-tab="tab1" href="#">CHỜ XÁC NHẬN (@Model.CHO_XAC_NHANS?.Count)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab2" href="#">CHƯA THANH TOÁN (@Model.CAN_THANH_TOANS?.Count)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab3" href="#">XÁC NHẬN THANH TOÁN (@Model.CHO_XAC_NHAN_THANH_TOANS?.Count)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab4" href="#">HOÀN TẤT (@Model.HOAN_TATS?.Count)</a>
+        </li>
+
+    </ul>
+    <div class="tab-content active" id="tab1">
+        @if (Model.CHO_XAC_NHANS.Count > 0)
+        {
+            @foreach (var item in Model.CHO_XAC_NHANS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnXacNhan(this, @item.Id)" class="btn btn-danger mb-2">
+                            Xác nhận
+                        </button>
+                        <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên mua
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn bán CHỜ XÁC NHẬN.</p>
+        }
+
+    </div>
+    <div class="tab-content" id="tab2">
+        @if (Model.CAN_THANH_TOANS.Count > 0)
+        {
+            @foreach (var item in Model.CAN_THANH_TOANS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn bán CẦN THANH TOÁN.</p>
+        }
+    </div>
+    <div class="tab-content" id="tab3">
+        @if (Model.CHO_XAC_NHAN_THANH_TOANS.Count > 0)
+        {
+            @foreach (var item in Model.CHO_XAC_NHAN_THANH_TOANS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnXacNhanThanhToan(this, @item.Id)" class="btn btn-danger mb-2">
+                            Xác nhận đã thanh toán
+                        </button>
+                        <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn bán CẦN THANH TOÁN.</p>
+        }
+    </div>
+    <div class="tab-content" id="tab4">
+        @if (Model.HOAN_TATS.Count > 0)
+        {
+            @foreach (var item in Model.HOAN_TATS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn bán HOÀN TẤT.</p>
+        }
+   
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $(".nav-quan-ly-tin").on("click", function (e) {
+                e.preventDefault();
+
+                // Xóa lớp active khỏi tất cả các tab
+                $(".nav-link").removeClass("active");
+                $(".tab-content").removeClass("active");
+
+                // Thêm lớp active vào tab được click
+                $(this).addClass("active");
+                const targetTab = $(this).data("tab");
+                $("#" + targetTab).addClass("active");
+            });
+        });
+    </script>
+    <script>
+
+        function btnXacNhan(btn, id) {
+            const $item = $(btn).closest('.draft-item')
+            $.ajax({
+                url: `/donhang/xacnhan/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                            return;
+                        }
+                        toastr.success(response.message);
+                        $item.hide();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
+            function btnXacNhanThanhToan(btn, id) {
+                const $item = $(btn).closest('.draft-item')
+                $.ajax({
+                    url: `/donhang/xacnhanthanhtoan/${id}`,
+                    type: 'GET',
+                    success: function (response) {
+                        if (response) {
+                            if (response.error) {
+                                toastr.error(response.message);
+                                return;
+                            }
+                            toastr.success(response.message);
+                            $item.hide();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Đã xảy ra lỗi: ' + error);
+                        toastr.error(error);
+                    }
+                });
+            }
+    </script>
+}

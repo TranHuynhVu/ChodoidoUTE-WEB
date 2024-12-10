@@ -11,6 +11,8 @@ namespace ChodoidoUTE.ViewModels
         public double? Price { get; set; }
         public string? Title { get; set; }
         public string? PostProductStatus { get; set; }
+        public string? Address { get; set; }
+
         public DateTime? TimePost { get; set; }
         public AppUser? User { get; set; }
         public  List<ProductImage>? Images {  get; set; }

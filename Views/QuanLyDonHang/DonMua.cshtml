@@ -1,0 +1,478 @@
+﻿﻿@using ChodoidoUTE.ViewModels;
+@model DonMuaVM;
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    .container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+
+    .profile-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .profile-section img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile-section .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .profile-section .profile-info .name {
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .profile-section .profile-info .create-store {
+                color: #007bff;
+                cursor: pointer;
+            }
+
+    .nav-tabs .nav-item {
+        margin-right: 5px;
+    }
+
+    .nav-tabs .nav-link {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #f5f5f5;
+            color: #ff9800;
+        }
+
+        .nav-tabs .nav-link.active {
+            border-color: #ff9800;
+            color: #fff;
+            background-color: #ff9800;
+        }
+
+    .tab-content {
+        margin-top: 20px;
+    }
+
+    .draft-item {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .draft-item:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .draft-item img {
+            border-radius: 8px;
+            margin-right: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .draft-item .draft-info {
+            flex-grow: 1;
+        }
+
+            .draft-item .draft-info .title {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .draft-item .draft-info .location {
+                font-size: 14px;
+                color: #888;
+                margin-bottom: 10px;
+            }
+
+            .draft-item .draft-info .price {
+                font-size: 16px;
+                color: #28a745;
+                font-weight: bold;
+            }
+
+        .draft-item .actions button {
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .draft-item .actions .btn-success {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .draft-item .actions .btn-success:hover {
+                background-color: #218838;
+            }
+
+        .draft-item .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+
+    .tab-content {
+        display: none;
+    }
+
+        .tab-content.active {
+            display: block;
+        }
+          /* CSS cho modal và sao */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        width:300px;
+    }
+    .rating-stars .star {
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccc;
+    }
+    .rating-stars .star.selected {
+        color: #f39c12;
+    }
+</style>
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <a class="text-decoration-none text-primary" href="/dao-cho">
+                Chợ Tốt
+            </a>
+            &gt;
+            <span>
+                Đơn mua
+            </span>
+        </div>
+        <div>
+            <button class="btn btn-outline-danger">
+                Có gì mới
+            </button>
+        </div>
+    </div>
+ 
+    <ul class="nav nav-tabs mb-3" id="navTabs">
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link active" data-tab="tab1" href="#">CHỜ XÁC NHẬN (@Model.CHO_XAC_NHANS?.Count)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab2" href="#">CẦN THANH TOÁN (@Model.CAN_THANH_TOANS?.Count)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab3" href="#">HOÀN TẤT (@Model.HOAN_TATS?.Count)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab4" href="#">ĐÃ HỦY (@Model.DA_HUYS?.Count)</a>
+        </li>
+    </ul>
+    <div class="tab-content active" id="tab1">
+        @if (Model.CHO_XAC_NHANS.Count > 0)
+        {
+            @foreach (var item in Model.CHO_XAC_NHANS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <div class="actions">
+                         <button onclick="btnHuy(this, @item.Id)" class="btn btn-danger mb-2">
+                            Hủy
+                        </button>
+                        <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn mua CHỜ XÁC NHẬN.</p>
+        }
+
+    </div>
+    <div class="tab-content" id="tab2">
+         @if (Model.CAN_THANH_TOANS.Count > 0)
+        {
+            @foreach (var item in Model.CAN_THANH_TOANS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="/thanh-toan/@item.Id" class="btn btn-danger mb-2">
+                            Thanh toán
+                        </a>
+                      <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn mua CẦN THANH TOÁN.</p>
+        }
+    </div>
+    <div class="tab-content" id="tab3">
+         @if (Model.HOAN_TATS.Count > 0)
+        {
+            @foreach (var item in Model.HOAN_TATS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="btnDanhGia(this, @item.ProductId)" class="btn btn-danger mb-2">
+                            Đánh giá
+                        </button>
+                      <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn mua HOÀN TẤT.</p>
+        }
+        <!-- Modal đánh giá -->
+        <div id="ratingModal" class="modal">
+            <div class="modal-content">
+                <h3>Đánh giá sản phẩm</h3>
+                <div class="rating-stars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <button id="submitRating" class="btn btn-primary">Gửi đánh giá</button>
+                <button id="cancelRating" class="btn btn-secondary">Hủy</button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content" id="tab4">
+         @if (Model.DA_HUYS.Count > 0)
+        {
+            @foreach (var item in Model.DA_HUYS)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.Product.ProductImages?.FirstOrDefault()?.UrlImg" width="100" />
+                    <div class="draft-info">
+                        <div class="title">
+                            @item.Product.Title
+                        </div>
+                        <div class="location">
+                            @item.Product.Description
+                        </div>
+                        <div class="price">
+                            <div>
+                                Đơn giá: @item.Product.Price đ       Số lượng:@item.Count
+                            </div>
+                            <div>
+                                Tổng: @(item.Product.Price * item.Count)đ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="" class="btn btn-danger mb-2">
+                            Mua lại
+                        </button>
+                      <a href="/chat/product/create/@item.ProductId" class="btn btn-success">
+                            Liên hệ bên bán
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có đơn mua ĐÃ HỦY.</p>
+        }
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $(".nav-quan-ly-tin").on("click", function (e) {
+                e.preventDefault();
+
+                // Xóa lớp active khỏi tất cả các tab
+                $(".nav-link").removeClass("active");
+                $(".tab-content").removeClass("active");
+
+                // Thêm lớp active vào tab được click
+                $(this).addClass("active");
+                const targetTab = $(this).data("tab");
+                $("#" + targetTab).addClass("active");
+            });
+        });
+    </script>
+    <script>
+        function btnDanhGia(btn, id) {
+            const modal = document.getElementById("ratingModal");
+            modal.style.display = "flex";
+
+            let selectedRating = 0;
+
+            // Reset số sao khi mở modal
+            const stars = document.querySelectorAll(".rating-stars .star");
+            stars.forEach(star => star.classList.remove("selected"));
+
+            stars.forEach(star => {
+                star.addEventListener("click", function () {
+                    selectedRating = parseInt(this.getAttribute("data-value"));
+                    stars.forEach(s => s.classList.remove("selected"));
+                    for (let i = 0; i < selectedRating; i++) {
+                        stars[i].classList.add("selected");
+                    }
+                });
+            });
+
+            // Xử lý gửi đánh giá
+            document.getElementById("submitRating").addEventListener("click", function () {
+                if (selectedRating === 0) {
+                    alert("Vui lòng chọn số sao!");
+                    return;
+                }
+
+                $.ajax({
+                    url: `/donhang/danhgia`,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ ProductId: id, Rating: selectedRating }),
+                    success: function (response) {
+                        if (response && !response.error) {
+                            toastr.success("Đánh giá thành công!");
+                        } else {
+                            toastr.error(response.message || "Đã xảy ra lỗi!");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Lỗi khi gửi đánh giá: " + error);
+                    },
+                    complete: function () {
+                        modal.style.display = "none";
+                    }
+                });
+            });
+
+            // Xử lý hủy đánh giá
+            document.getElementById("cancelRating").addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+        }
+
+
+
+        function btnHuy(btn, id) {
+            const $item = $(btn).closest('.draft-item')
+            $.ajax({
+                url: `/donhang/huy/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                            return;
+                        }
+                        toastr.success(response.message);
+                        $item.hide();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Đã xảy ra lỗi: ' + error);
+                    toastr.error(error);
+                }
+            });
+        }
+    </script>
+}
