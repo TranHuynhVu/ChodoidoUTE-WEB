@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Quản lý tài khoản";
+}
+<div class="container-fluid mt-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-2 text-gray-800"><strong>Bảng quản lý tài khoản</strong></h1>
+        <button id="openModal" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-user-pen fa-sm text-white-50"></i> Xem danh sách sinh viên đăng ký
+        </button>
+    </div>
+    <!-- Page Heading -->
+    <p class="mb-4">
+        Bảng này giúp quản lý các tài khoản trong Website
+    </p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tài khoản</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTableUser" class="table table-bordered table-striped table-vcenter text-nowrap" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> STT</th>
+                            <th class="text-center"> Hình ảnh</th>
+                            <th class="text-center"> Họ tên</th>
+                            <th class="text-center"> Email</th>
+                            <th class="text-center"> Tình trạng</th>
+                            <th class="text-center"> Chức năng </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true" style="top:30px !important; left:-100px !important">
+    <div class="modal-dialog modal-lg">
+        <!-- Thêm lớp 'modal-lg' để mở rộng modal -->
+        <div class="modal-content" style="width:1075px">
+            <div class="modal-header" style="background-color: #007bff; color: white; border-bottom: none; padding: 1rem;">
+                <h2 class="modal-title" style="padding-left:315px" id="detailModalLabel">Danh sách sinh viên đăng ký</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalContent" style="width:1075px">
+                <!-- Nội dung bảng sẽ được chèn vào đây -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" style="width:1050px">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script src="~/loadData/ListUser.js"></script>
+}

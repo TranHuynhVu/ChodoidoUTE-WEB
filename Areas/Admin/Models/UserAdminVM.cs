@@ -12,7 +12,7 @@ namespace ChodoidoUTE.Areas.Admin.Models
         public bool? Gender { get; set; }
         public string? Password { get; set; }
         public string? ConfirmPassword {  get; set; }
-        public string? Local {  get; set; }
+        public string? Address {  get; set; }
         public IFormFile? ImgUrl { get; set; }
     }
 }

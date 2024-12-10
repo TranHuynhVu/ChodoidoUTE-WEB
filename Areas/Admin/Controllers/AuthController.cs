@@ -46,7 +46,7 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
             currentUser.Name = user.Name;
             currentUser.PhoneNumber = user.PhoneNumber;
             currentUser.Gender = user.Gender ?? currentUser.Gender; // Giữ giá trị cũ nếu null.
-            currentUser.Local = user.Local;
+            currentUser.Address = user.Address;
             if (user.ImgUrl != null) {
                 string timestamp = DateTime.Now.ToString("ddMMyyyyHHmmss");
                 string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(user.ImgUrl.FileName);
