@@ -1,0 +1,138 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+    ViewData["Title"] = "Trang cá nhân";
+}
+<div class="container-fluid mt-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-2 text-gray-800">Thông tin cá nhân</h1>
+    </div>
+    <p class="mb-4">
+        Thông tin cá nhân của Admin
+    </p>
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(user.ImgUrl))
+                    {
+                        <img class="img-profile rounded-circle" src="@user.ImgUrl" style="width:350px" />
+                    }
+                    else
+                    {
+                        <img class="img-profile rounded-circle" src="/admin/images/undraw_profile@(user.Gender == true ? "" : "_3").svg" />
+                    }
+                    <h4 class="card-title mt-3">@user.Name</h4>
+                    <h6 class="card-subtitle">Admin</h6>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <small class="text-muted">Email</small>
+                    <h6>@user.Email</h6>
+                    <small class="text-muted p-t-30 db">Số điện thoại</small>
+                    <h6>@(user.PhoneNumber ?? "Chưa có số điện thoại")</h6>
+                    <small class="text-muted p-t-30 db">Địa chỉ</small>
+                    <h6>@user.Local</h6>
+                    <div class="map-box">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.7805804229524!2d108.21105927495516!3d16.07687208460371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421847f0d1243f%3A0xfe9e3527761db501!2zNDggQ2FvIFRo4bqvbmcsIFRoYW5oIELDrG5oLCBI4bqjaSBDaMOidSwgxJDDoCBO4bq1bmcgNTUwMDAwLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1731312904725!5m2!1svi!2s" width="350" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <small class="text-muted p-t-30 db">Liên lạc qua</small>
+                    <br />
+                    <button class="btn btn-circle btn-secondary"><i class="fab fa-facebook-square"></i></button>
+                    <button class="btn btn-circle btn-secondary"><i class="fab fa-instagram-square"></i></button>
+                    <button class="btn btn-circle btn-secondary"><i class="fab fa-twitter-square"></i></button>
+                </div>
+            </div>
+        </div>
+        <!-- Column end -->
+        <!-- Column start -->
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/admin/profile/update" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-md-12">Họ tên</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" name="Name" value="@user.Name" placeholder="Họ tên" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Email</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" name="Email" value="@user.Email"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Số điện thoại</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" name="PhoneNumber" placeholder="Chưa có số điện thoại" value="@user.PhoneNumber"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-12">Giới tính</label>
+                            <div class="col-sm-12">
+                                <select class="form-control form-control-line" name="Gender">
+                                    @if (user.Gender == null)
+                                    {
+                                        <option value=true >Nam</option>
+                                        <option value=false >Nữ</option>
+                                    }
+                                    else
+                                    {
+                                        @if (user.Gender == true)
+                                        {
+                                            <option value=true selected>Nam</option>
+                                            <option value=false>Nữ</option>
+                                        }
+                                        else
+                                        {
+                                            <option value=true>Nam</option>
+                                            <option value=false selected>Nữ</option>
+                                        }
+                                    }  
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Mật khẩu mới</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="password" name="Password" placeholder="Nhập mật khẩu mới" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Xác thực mật khẩu</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="password" name="ConfirmPassword" placeholder="Xác thực mật khẩu" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Địa chỉ</label>
+                            <div class="col-md-12">
+                                <textarea class="form-control form-control-line" placeholder="Chưa có địa chỉ" name="Local" rows="3">@user.Local</textarea>
+                            </div>
+                        </div>
+                        <!-- Thêm các trường khác tương tự -->
+                        <div class="form-group" upload-image>
+                            <label class="col-md-12">Avatar</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="file" placeholder="Ảnh avatar" name="ImgUrl" accept="image/*" upload-image-input />
+                                <img id="thumbnailPreview" class="mt-2 ml-3" src="" alt="" upload-image-preview />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fas fa-edit" style="margin-right: 5px;"></i> Cập nhật thông tin
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column end -->
+    </div>
+</div>

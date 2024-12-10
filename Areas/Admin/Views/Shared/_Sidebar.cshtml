@@ -30,4 +30,13 @@
         </a>
     </li>
     <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Management Post
+    </div>
+    <li class="nav-item @(ViewData["Title"]?.ToString().IndexOf("bài đăng", StringComparison.OrdinalIgnoreCase) >= 0 ? "active" : "")">
+        <a class="nav-link collapsed" href="/admin/post" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-newspaper"></i>
+            <span>Quản lý bài đăng</span>
+        </a>
+    </li>
 </ul>

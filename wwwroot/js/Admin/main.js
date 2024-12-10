@@ -14,6 +14,7 @@
 
 const uploadImage = document.querySelector('[upload-image]');
 if (uploadImage) {
+    console.log(uploadImage);
     const inputImage = uploadImage.querySelector('[upload-image-input]');
     const previewImage = uploadImage.querySelector('[upload-image-preview]');
     if (inputImage && previewImage) {

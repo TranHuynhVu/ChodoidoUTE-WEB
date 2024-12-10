@@ -15,7 +15,7 @@ function loadDataTable() {
             {
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    return meta.row + 1;
+                    return '<p style="margin-top:60px">' + (meta.row + 1) + '</p>';
                 },
                 "width": "5%",
                 "className": "text-center"
@@ -41,9 +41,11 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                         <a href="/admin/category/edit/${data}" class="btn btn-sm btn-warning text-white mr-1" style="width:48%;margin-top:60px;border: 2px solid #000000;" >
+                            <i class='fas fa-edit' style="margin-right:5px"></i>
                             Sửa
                         </a>
                         <a class="btn btn-sm btn-danger text-white" onclick="Delete('/admin/category/delete/${data}')" style="width:50%;margin-top:60px;border: 2px solid #000000;">
+                            <i class='fas fa-trash' style="margin-right:5px"></i>
                             Xóa
                         </a>
                     `;
@@ -64,6 +66,7 @@ function loadDataTable() {
             "loadingRecords": "Loading...",
 
         },
+        "width": "100%",
         "dom": '<"row"<"col-md-6"l><"col-md-6"f>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
         "pagingType": "full_numbers",
         "renderer": "bootstrap"

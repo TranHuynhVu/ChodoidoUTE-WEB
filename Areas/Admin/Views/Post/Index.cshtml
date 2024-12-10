@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Quản lý bài đăng";
+}
+<div class="container-fluid mt-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-2 text-gray-800"><strong>Bảng quản lý bài đăng</strong></h1>
+    </div>
+    <!-- Page Heading -->
+    <p class="mb-4">
+        Bảng này giúp quản lý các bài đăng trong Website
+    </p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bài đăng</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTablePost" class="table table-bordered table-striped table-vcenter text-nowrap" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> STT</th>
+                            <th class="text-center"> Tên người đăng</th>
+                            <th class="text-center"> Tiêu đề</th>
+                            <th class="text-center"> Tình trạng</th>
+                            <th class="text-center"> Giá</th>
+                            <th class="text-center"> Chức năng </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/loadData/ListPost.js"></script>
+}
