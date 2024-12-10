@@ -1,3 +1,173 @@
 ﻿@{
-    ViewData["Title"] = "Trang chủ";
+    ViewData["Title"] = "Index";
 }
+@using Newtonsoft.Json;
+<h2 class="text-black py-4">Dashboard</h2>
+<div class="row" style="padding:20px;">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card shining-card">
+                    <div class="card-body" style="background-color: #0099FF;">
+                        <div style="display:flex; text-align:center">
+                            <svg width="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="fill: white; stroke: white; margin-right:5px;">
+                                <path d="M64 64C28.7 64 0 92.7 0 128L0 384c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64L64 64zM272 192l224 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-224 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zM256 304c0-8.8 7.2-16 16-16l224 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-224 0c-8.8 0-16-7.2-16-16zM164 152l0 13.9c7.5 1.2 14.6 2.9 21.1 4.7c10.7 2.8 17 13.8 14.2 24.5s-13.8 17-24.5 14.2c-11-2.9-21.6-5-31.2-5.2c-7.9-.1-16 1.8-21.5 5c-4.8 2.8-6.2 5.6-6.2 9.3c0 1.8 .1 3.5 5.3 6.7c6.3 3.8 15.5 6.7 28.3 10.5l.7 .2c11.2 3.4 25.6 7.7 37.1 15c12.9 8.1 24.3 21.3 24.6 41.6c.3 20.9-10.5 36.1-24.8 45c-7.2 4.5-15.2 7.3-23.2 9l0 13.8c0 11-9 20-20 20s-20-9-20-20l0-14.6c-10.3-2.2-20-5.5-28.2-8.4c0 0 0 0 0 0s0 0 0 0c-2.1-.7-4.1-1.4-6.1-2.1c-10.5-3.5-16.1-14.8-12.6-25.3s14.8-16.1 25.3-12.6c2.5 .8 4.9 1.7 7.2 2.4c13.6 4.6 24 8.1 35.1 8.5c8.6 .3 16.5-1.6 21.4-4.7c4.1-2.5 6-5.5 5.9-10.5c0-2.9-.8-5-5.9-8.2c-6.3-4-15.4-6.9-28-10.7l-1.7-.5c-10.9-3.3-24.6-7.4-35.6-14c-12.7-7.7-24.6-20.5-24.7-40.7c-.1-21.1 11.8-35.7 25.8-43.9c6.9-4.1 14.5-6.8 22.2-8.5l0-14c0-11 9-20 20-20s20 9 20 20z" />
+                            </svg>
+                            <span class="fs-5 me-2">
+                                <a style="color: white; font-size:18px;" href="">Người dùng</a>
+                            </span>
+                        </div>
+                        <div class="pt-3">
+                            <h4 class="counter" style="visibility: visible;">
+                                <a href="" style="color: white; font-size:18px;">@ViewBag.userCount</a>
+                            </h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shining-card">
+                    <div class="card-body" style="background-color: #00CC66;">
+                        <div style="display:flex; text-align:center">
+                            <svg height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="fill: white; stroke: white;margin-right:5px;">
+                                <path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM80 64l64 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L80 96c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l64 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-64 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm54.2 253.8c-6.1 20.3-24.8 34.2-46 34.2L80 416c-8.8 0-16-7.2-16-16s7.2-16 16-16l8.2 0c7.1 0 13.3-4.6 15.3-11.4l14.9-49.5c3.4-11.3 13.8-19.1 25.6-19.1s22.2 7.7 25.6 19.1l11.6 38.6c7.4-6.2 16.8-9.7 26.8-9.7c15.9 0 30.4 9 37.5 23.2l4.4 8.8 54.1 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-64 0c-6.1 0-11.6-3.4-14.3-8.8l-8.8-17.7c-1.7-3.4-5.1-5.5-8.8-5.5s-7.2 2.1-8.8 5.5l-8.8 17.7c-2.9 5.9-9.2 9.4-15.7 8.8s-12.1-5.1-13.9-11.3L144 349l-9.8 32.8z" />
+                            </svg>
+                            <span class="fs-5 me-2">
+                                <a href="" style="color: white;font-size:18px;">Bài đăng</a>
+                            </span>
+                        </div>
+                        <div class="progress-detail pt-3">
+                            <h4 class="counter" style="visibility: visible;">
+                                <a href="" style="color: white;font-size:18px;">@ViewBag.productCount</a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shining-card">
+                    <div class="card-body" style="background-color: #CC9933;">
+                        <div style="display:flex; text-align:center">
+                            <svg height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="fill: white; stroke: white;margin-right:5px;">
+                                <path fill="white" d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z" />
+                            </svg>
+                            <span class="fs-5 me-2">
+                                <a href="" style="color: white;font-size:18px;">Đơn hàng</a>
+                            </span>
+                        </div>
+                        <div class="progress-detail pt-3">
+                            <h4 class="counter" style="visibility: visible; ">
+                                <a href="" style="color: white; font-size:18px;">@ViewBag.donHang</a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+    </div>
+
+</div>
+<div style="">
+    <ul id="commonLegend" style="display:flex;list-style: none; padding: 0; margin: 0;">
+        <li style="display: flex; align-items: center; margin-right: 10px;">
+            <span style="display:inline-block; width:15px; height:15px; background-color:rgba(128, 128, 128, 0.6); margin-right:8px;"></span>
+            Không có dữ liệu
+        </li>
+    </ul>
+</div>
+<div style="display:flex; flex-wrap:wrap; margin-top:50px;">
+    <div style="width: 25%; margin: auto;">
+        <canvas id="dataProduct"></canvas>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dataProduct = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartProduct));
+
+        console.log(dataProduct);
+        const colors = [
+            'rgba(255, 99, 132, 0.6)', 
+            'rgba(54, 162, 235, 0.6)', 
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)' 
+        ];
+        const emptyColor = 'rgba(128, 128, 128, 0.6)'; 
+
+        // Kiểm tra nếu dữ liệu rỗng (toàn giá trị bằng 0)
+        function isEmptyData(data) {
+            return Object.values(data).every(value => value === 0);
+        }
+        const commonLegend = document.getElementById('commonLegend');
+        const labels = Object.keys(dataProduct);
+        labels.forEach((label, index) => {
+            const legendItem = document.createElement('li');
+            legendItem.style.display = 'flex';
+            legendItem.style.alignItems = 'center';
+            legendItem.style.marginRight = '10px';
+            legendItem.innerHTML = `
+                             <span style="display:inline-block; width:15px; height:15px; background-color:${colors[index]}; margin-right:8px;"></span>
+                             ${label}
+                         `;
+            commonLegend.appendChild(legendItem);
+        });
+        // Tạo biểu đồ hoặc hiển thị màu xám nếu không có dữ liệu
+        function createChart(ctxId, data, title) {
+            const ctx = document.getElementById(ctxId).getContext('2d');
+
+            let chartData, chartColors;
+
+            if (isEmptyData(data)) {
+                chartData = [1];
+                chartColors = [emptyColor];
+                chartLabels = ['Không có dữ liệu'];
+            } else {
+                chartData = Object.values(data);
+                chartColors = colors.slice(0, chartData.length);
+                chartLabels = Object.keys(data);
+            }
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        data: chartData,
+                        backgroundColor: chartColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeOutBounce'
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // Tắt legend mặc định
+                        },
+                        title: {
+                            display: true,
+                            position: "bottom",
+                            text: title,
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Tạo biểu đồ cho từng loại dữ liệu
+        createChart('dataProduct', dataProduct, 'Bài đăng');
+    });
+</script>
+
+
