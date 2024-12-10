@@ -114,7 +114,9 @@ namespace ChodoidoUTE.Controllers
                     UserName = registerVM.Email,
                     Email = registerVM.Email,
                     Name = registerVM.Name,
-                    Status = 1,
+                    Point = 0,
+                    LuotDang = 3,
+                    Status = 0,
                     ImgUrl = "/img-user.jpg"
                 };
 

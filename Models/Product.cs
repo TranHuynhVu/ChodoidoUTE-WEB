@@ -10,7 +10,7 @@ namespace ChodoidoUTE.Models
         public int? Count { get; set; }
         public string? Description { get; set; }
         public bool? IsNew { get; set; }
-        public string? PostProductStatus { get; set; } // CHO_DUYET, DA_AN, DA_BAN, DA_DUYET, DA_TUCHOI
+        public string? PostProductStatus { get; set; } // CHO_DUYET, DA_AN, DA_BAN, DA_DUYET, TU_CHOI
         public double? Price { get; set; }
         public DateTime? TimePost { get; set; }
         public string? Title { get; set; }

@@ -33,7 +33,7 @@ namespace ChodoidoUTE.Api.User
             return Json(new
             {
                 hasChecked = attendance != null,
-                points = 100, // Điểm mặc định
+                points = 100, 
                 dayOfWeek = today.DayOfWeek
             });
         }

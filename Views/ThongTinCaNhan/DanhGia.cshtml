@@ -227,41 +227,50 @@
     <ul class="nav nav-tabs mb-3" id="navTabs">
 
         <li class="nav-item">
-            <a class="nav-quan-ly-tin nav-link" data-tab="tab1" href="#">TỪ NGƯỜI MUA (0)</a>
+            <a class="nav-quan-ly-tin nav-link" data-tab="tab1" href="#">TỪ NGƯỜI MUA (@danhgias.Count?)</a>
         </li>
         <li class="nav-item">
             <a class="nav-quan-ly-tin nav-link" data-tab="tab2" href="#">TỪ NGƯỜI BÁN (0)</a>
         </li>
     </ul>
     <div class="tab-content active" id="tab1">
-        @foreach (var item in danhgias)
+        @if (danhgias != null && danhgias.Count > 0)
         {
-            <div class="draft-item">
-                <img alt="Image of the draft item" height="100" src="@item.ProductImages?.UrlImg" width="100" id="draft-image" />
-                <div class="draft-info">
-                    <h5 id="draft-title">@item.Product?.Title</h5>
-                    <p id="draft-user">Người dùng: <span>@item.User.Name</span></p>
+            @foreach (var item in danhgias)
+            {
+                <div class="draft-item">
+                    <img alt="Image of the draft item" height="100" src="@item.ProductImages?.UrlImg" width="100" id="draft-image" />
+                    <div class="draft-info">
+                        <h5 id="draft-title">@item.Product?.Title</h5>
+                        <p id="draft-user">Người dùng: <span>@item.User?.Name</span></p>
 
-                    <!-- Hiển thị số sao -->
-                    <p id="draft-rating">
-                        Số sao:
-                        <span id="stars">
-                            @for (int i = 1; i <= 5; i++)
-                            {
-                                if (i <= item.Rate)
+                        <!-- Hiển thị số sao -->
+                        <p id="draft-rating">
+                            Số sao:
+                            <span id="stars">
+                                @for (int i = 1; i <= 5; i++)
                                 {
-                                    <span class="star">★</span>  <!-- Hiển thị sao đầy -->
+                                    if (i <= item.Rate)
+                                    {
+                                        <span class="star">★</span>  <!-- Hiển thị sao đầy -->
+                                    }
+                                    else
+                                    {
+                                        <span class="star">☆</span>  <!-- Hiển thị sao rỗng -->
+                                    }
                                 }
-                                else
-                                {
-                                    <span class="star">☆</span>  <!-- Hiển thị sao rỗng -->
-                                }
-                            }
-                        </span>
-                    </p>
+                            </span>
+                        </p>
+                    </div>
                 </div>
-            </div>
+            }
         }
+        else
+        {
+            <p>Không có đánh giá nào.</p>
+        }
+
+       
     </div>
 
 

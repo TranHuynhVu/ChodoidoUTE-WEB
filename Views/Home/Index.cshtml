@@ -22,7 +22,7 @@
             <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4 p-3">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="@item.Images[0].UrlImg" alt="">
+                        <img class="img-fluid w-100" src="@item.Images?.FirstOrDefault().UrlImg" alt="">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a id="yeu-thich-product" class="btn btn-outline-dark btn-square" onclick="ProductYeuThich(@item.Id)"><i class="far fa-heart"></i></a>
@@ -38,8 +38,8 @@
 
                         <div class="d-flex justify-content-between mt-3 ">
                             <div class="user-icon mr-3 d-flex justify-content-between">
-                                <img src="@item.User.ImgUrl" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
-                                <span style="font-size: 10px; font-weight: bold;">@item.User.Name</span>
+                                <img src="@item.User?.ImgUrl" alt="User Avatar" class="rounded-circle mr-1" style="width: 15px; height: 15px;">
+                                <span style="font-size: 10px; font-weight: bold;">@item.User?.Name</span>
                             </div>
                             <div class="product-time d-flex justify-content-between">
                                 <i class="fa fa-clock"></i> <span style="font-size: 10px; margin-left: 5px;"> @item.TimePost?.ToString("dd/MM/yyyy")</span>
