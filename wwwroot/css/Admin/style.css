@@ -12264,3 +12264,23 @@ a.btn-table:hover {
     font-weight: bold; /* Chữ đậm */
     text-align: center; /* Căn giữa chữ (tùy chọn) */
 }
+
+.image-gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.product-image:hover {
+    transform: scale(1.1);
+}

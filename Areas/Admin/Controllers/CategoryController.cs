@@ -43,11 +43,11 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var errorMessages = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                        .ToList();
-                TempData["ErrorMessage"] = string.Join("; ", errorMessages);
+                var firstErrorMessage = ModelState.Values
+                     .SelectMany(v => v.Errors)
+                     .Select(e => e.ErrorMessage)
+                     .FirstOrDefault();
+                TempData["ErrorMessage"] = firstErrorMessage;
                 return View("Create");
             }
             string timestamp = DateTime.Now.ToString("ddMMyyyyHHmmss");
@@ -94,11 +94,11 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
             }
             if (!ModelState.IsValid)
             {
-                var errorMessages = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                        .ToList();
-                TempData["ErrorMessage"] = string.Join("; ", errorMessages);
+                var firstErrorMessage = ModelState.Values
+                     .SelectMany(v => v.Errors)
+                     .Select(e => e.ErrorMessage)
+                     .FirstOrDefault();
+                TempData["ErrorMessage"] = firstErrorMessage;
                 ViewBag.Category = category;
                 return View("Edit");
             }

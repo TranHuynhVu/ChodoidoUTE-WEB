@@ -23,7 +23,6 @@
   <ItemGroup>
     <Folder Include="Api\Admin\" />
 	<Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\" />
     <Folder Include="Areas\User\Models\" />
 	<Folder Include="Areas\User\Controller\" />
     <Folder Include="Areas\User\Views\Shared\" />
@@ -31,7 +30,6 @@
     <Folder Include="Api\" />
     <Folder Include="wwwroot\css\Admin\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\videos\" />
   </ItemGroup>
 
 </Project>

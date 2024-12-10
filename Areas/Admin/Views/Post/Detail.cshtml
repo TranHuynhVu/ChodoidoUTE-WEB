@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Thông tin chi tiết bài đăng";
+    var post = ViewBag.Post as ChodoidoUTE.Models.Product;
+}
+<div class="container-fluid mt-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-2 text-gray-800">Thông tin chi tiết bài đăng</h1>
+    </div>
+    <p class="mb-4">
+        Thông tin người đăng
+    </p>
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(@post.User.ImgUrl))
+                    {
+                        <img class="img-profile rounded-circle" src="@post.User.ImgUrl" style="width:350px" />
+                    }
+                    else
+                    {
+                        <img class="img-profile rounded-circle" src="/admin/images/undraw_profile@(post.User.Gender == true ? "" : "_3").svg" />
+                    }
+                    <h4 class="card-title mt-3">@post.User.Name</h4>
+                    <h6 class="card-subtitle">Admin</h6>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <small class="text-muted">Email</small>
+                    <h6>@post.User.Email</h6>
+                    <small class="text-muted p-t-30 db">Số điện thoại</small>
+                    <h6>@(post.User.PhoneNumber ?? "Chưa có số điện thoại")</h6>
+                    <small class="text-muted p-t-30 db">Địa chỉ</small>
+                    <h6>@(post.User.Local ?? "Chưa có địa chỉ")l</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Column end -->
+        <!-- Column start -->
+        <div class="col-lg-8 col-xlg-9 col-md-7 mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material">
+                        <div class="form-group">
+                            <label class="col-md-12">Tiêu đề bài đăng</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@post.Title" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Danh mục</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@post.Category.Name" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Số lượng</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@post.Count" readonly  />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Giá tiền</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text"
+                                       value="@(string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0} VNĐ", post.Price))"
+                                       readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-12">Tình trạng hàng</label>
+                            <div class="col-sm-12">
+                                <select class="form-control form-control-line" disabled>
+                                    @if (post.IsNew == true)
+                                    {
+                                        <option selected>Đồ mới</option>
+                                        <option >Đồ cũ</option>
+                                    }
+                                    else
+                                    {
+                                        <option >Đồ mới</option>
+                                        <option selected>Đồ cũ</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Tình trạng đơn</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@(post.PostProductStatus switch
+                                {
+                                    "CHO_DUYET" => "Chờ duyệt",
+                                    "DA_DUYET" => "Đã duyệt",
+                                    "TU_CHOI" => "Đã từ chối",
+                                    "DA_AN" => "Đã ẩn",
+                                    "DA_BAN" => "Đã bán",
+                                    _ => "Không xác định"
+                                })" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Thời gian đăng</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="datetime-local"
+                                       value="@(post.TimePost?.ToString("yyyy-MM-ddTHH:mm") ?? "Chưa có thời gian đăng")"
+                                       readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Mô tả</label>
+                            <div class="col-md-12">
+                                <textarea class="form-control form-control-line" rows="3" readonly>@post.Description</textarea>
+                            </div>
+                        </div>
+                        <!-- Thêm các trường khác tương tự -->
+                        <div class="form-group" upload-image>
+                            <label class="col-md-12"><strong>Ảnh sản phẩm</strong></label>
+                            <div class="col-md-12">
+                                <div class="image-gallery" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content:space-around">
+                                    @foreach (var image in post.ProductImages)
+                                    {
+                                        <a href="@image.UrlImg" data-lightbox="product-images" data-title="Ảnh sản phẩm" style="text-decoration: none;">
+                                            <img src="@image.UrlImg" alt="Ảnh sản phẩm"
+                                                 style="width: 180px; height: 180px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" />
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" upload-image>
+                            <label class="col-md-12"><strong>Video sản phẩm</strong></label>
+                            <div class="col-md-12">
+                                <div class="image-gallery" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content:space-around">
+                                    @foreach (var video in post.ProductVideos)
+                                    {
+                                        <div style="width: 350px;">
+                                            <video width="100%" height="auto" controls>
+                                                <source src="@video.VideoUrl" type="video/mp4">
+                                                <source src="@video.VideoUrl" type="video/webm">
+                                                <source src="@video.VideoUrl" type="video/ogg">
+                                                Trình duyệt của bạn không hỗ trợ video.
+                                            </video>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column end -->
+    </div>
+</div>
