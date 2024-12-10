@@ -211,13 +211,16 @@
 
                     <!-- Địa chỉ và thời gian cập nhật -->
                     <div class="mb-3">
-                        <p class="mb-1"><i class="fas fa-map-marker-alt text-secondary me-2"></i>Phường Hòa Thuận Đông, Quận Hải Châu, Đà Nẵng</p>
+                        <p class="mb-1"><i class="fas fa-map-marker-alt text-secondary me-2"></i>@Model.Address</p>
                         <p><i class="fas fa-clock text-secondary me-2"></i>Cập nhật 10 phút trước</p>
                     </div>
 
-                    <!-- Nút hành động -->
+                    <div class="mb-3 d-flex">
+                        <label for="soluong" class="form-label">Số lượng:</label>
+                        <input type="number" id="soluong" name="soluong" value="1" class="form-control w-50" min="1">
+                    </div>
                     <div class="d-flex gap-2 mb-4">
-                        <button class="btn btn-outline-primary flex-grow-1">Hiện số 058928****</button>
+                        <a id="buy-link" class="btn btn-outline-primary flex-grow-1">Mua hàng</a>
                         @if (user.Id == Model.User.Id)
                         {
                             // Nút bị vô hiệu hóa và làm mờ
@@ -279,6 +282,22 @@
         document.getElementById("modalOverlay").style.display = "none";
     });
 </script>
+<script>
+
+        const buyLink = document.getElementById('buy-link');
+        const quantityInput = document.getElementById('soluong');
+
+        buyLink.addEventListener('click', function (e) {
+            e.preventDefault(); 
+            console.log(buyLink, quantityInput);
+            const quantity = parseInt(quantityInput.value) || 1;
+
+        const url = `/donhang/mua/@Model.Id/${quantity}`;
+            window.location.href = url; 
+        });
+
+</script>
+
 
 
 

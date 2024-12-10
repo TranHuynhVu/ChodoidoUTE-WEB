@@ -1,0 +1,281 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<AppUser> userManager;
+@inject SignInManager<AppUser> signManager;
+@{
+    var user = await userManager.GetUserAsync(User);
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+    }
+
+    .container {
+        width: 80%;
+        max-width: 900px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .rewards-section {
+        background-color: #ff9900;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .rewards-section p {
+            font-size: 18px;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .rewards-section button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #ff9900;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+            .rewards-section button:hover {
+                background-color: #f7d26b;
+            }
+
+    .rewards-progress {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        padding: 0 20px;
+    }
+
+    .progress-day {
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 8px;
+        width: 80px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #ff9900;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+        .progress-day.active {
+            background-color: #ffcb45;
+            color: white;
+            /* transform: translateY(-5px); */
+        }
+
+        .progress-day:hover {
+            background-color: #ffe082;
+            cursor: pointer;
+        }
+
+        .progress-day.active:hover {
+            background-color: #ffcb45;
+            transform: translateY(-5px);
+        }
+
+        .progress-day:not(.active) {
+            background-color: #fff3e0;
+        }
+
+
+    .point-section {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+        .point-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .point-section button {
+            padding: 10px 20px;
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .point-section button.disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+
+    .exchange-section {
+        background: #fafafa;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+        .exchange-section h2 {
+            font-size: 20px;
+        }
+
+        .exchange-section .points {
+            font-size: 22px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #007b00;
+        }
+
+    .exchange-points-section {
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    /* Hiển thị số lượt đăng tin */
+    .post-credits-section {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #e0f7fa;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+        .post-credits-section p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00796b;
+        }
+</style>
+
+<div class="container">
+    <h1>Điểm danh nhận xu và đổi điểm</h1>
+
+    <!-- Phần nhận xu -->
+    <div class="rewards-section">
+        <p><strong>Điểm danh nhận điểm</strong></p>
+        <p>Số điểm hiện tại: <span id="current-points">@user.Point</span></p>
+        <button id="claim-xu-btn">Nhấn để nhận ngay 100 xu</button>
+    </div>
+    <div class="exchange-section">
+        <h2>Đổi điểm lấy lượt đăng tin</h2>
+        <p>1 lượt đăng tin = 300 điểm</p>
+        <div class="point-section">
+            <button id="exchange-btn" class="disabled" disabled>Đổi điểm</button>
+        </div>
+    </div>
+
+    <!-- Số lượt đăng tin đang có-->
+    <div class="post-credits-section">
+        <p id="post-credits">Số lượt đăng tin còn lại: <span id="post-count">@user.LuotDang</span></p>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            const claimXuBtn = $('#claim-xu-btn');
+            const currentPointsDisplay = $('#current-points');
+
+            // Kiểm tra trạng thái điểm danh
+            $.ajax({
+                url: '/attendance/status',
+                method: 'GET',
+                success: function (response) {
+                    if (response.hasChecked) {
+                        claimXuBtn.prop('disabled', true).text("Đã điểm danh hôm nay");
+                    } else {
+                        claimXuBtn.prop('disabled', false).text(`Nhấn để nhận ngay ${response.points} Xu`);
+                    }
+                    // Lấy số điểm hiện tại từ `currentPointsDisplay`
+                //    const currentPoints = parseInt(currentPointsDisplay.text(), 10) || 0;
+
+                    // Cộng điểm mới từ `response.points`
+                 //   const updatedPoints = currentPoints + response.points;
+
+                    // Cập nhật lại giao diện
+                 //   currentPointsDisplay.text(updatedPoints);
+                },
+                error: function () {
+                    alert('Không thể kiểm tra trạng thái điểm danh!');
+                }
+            });
+
+            // Điểm danh khi nhấn nút
+            claimXuBtn.on('click', function () {
+                $.ajax({
+                    url: '/attendance/checkin',
+                    method: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            currentPointsDisplay.text(function (i, oldValue) {
+                                return parseInt(oldValue) + response.pointsEarned;
+                            });
+                            claimXuBtn.prop('disabled', true).text("Đã điểm danh hôm nay");
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi điểm danh!');
+                    }
+                });
+            });
+        });
+        // Kiểm tra điều kiện điểm để kích hoạt nút đổi điểm
+        const currentPoints = parseInt($('#current-points').text(), 10);
+        if (currentPoints >= 300) {
+            $('#exchange-btn').prop('disabled', false).removeClass('disabled');
+        }
+
+        $('#exchange-btn').on('click', function () {
+            $.ajax({
+                url: '/attendance/convert',
+                type: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        // Cập nhật giao diện
+                        $('#current-points').text(response.points);
+                        $('#post-count').text(response.luotDang);
+
+                        // Vô hiệu hóa nút nếu không đủ điểm
+                        if (response.points < 300) {
+                            $('#exchange-btn').prop('disabled', true).addClass('disabled');
+                        }
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Đã xảy ra lỗi khi đổi điểm!');
+                }
+            });
+        });
+
+    </script>
+}

@@ -27,5 +27,7 @@ namespace ChodoidoUTE.Data
         public DbSet<TinNhan> TinNhans { get; set; }
 
         public DbSet<ChiTietTinNhan> ChiTietTinNhans { get; set; }
+        public DbSet<RateStar> RateStars { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
     }
 }

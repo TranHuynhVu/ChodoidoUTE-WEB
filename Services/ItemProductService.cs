@@ -27,6 +27,7 @@ namespace ChodoidoUTE.Services
                     Count = p.Count,
                     Category = p.Category, 
                     Description = p.Description,
+                    Address = p.User.Address,
                     IsNew = p.IsNew,
                     Price = p.Price,
                     Title = p.Title,
@@ -97,7 +98,7 @@ namespace ChodoidoUTE.Services
             quanLyTinVM.User = await _context.Users.FindAsync(id);
             quanLyTinVM.TU_CHOIS = await _context.Products.Include(p => p.ProductImages).OrderByDescending(p => p.TimePost).Where(p => p.UserId == id && p.PostProductStatus == "TU_CHOI").ToListAsync();
             quanLyTinVM.DA_DUYETS = await _context.Products.Include(p => p.ProductImages).OrderByDescending(p => p.TimePost).Where(p => p.UserId == id && p.PostProductStatus == "DA_DUYET").ToListAsync();
-            quanLyTinVM.CHO_DUYETS = await _context.Products.Include(p => p.ProductImages).OrderByDescending(p => p.TimePost).Where(p => p.UserId == id && p.PostProductStatus == "CHOI_DUYET").ToListAsync();
+            quanLyTinVM.CHO_DUYETS = await _context.Products.Include(p => p.ProductImages).OrderByDescending(p => p.TimePost).Where(p => p.UserId == id && p.PostProductStatus == "CHO_DUYET").ToListAsync();
             quanLyTinVM.DA_ANS = await _context.Products.Include(p => p.ProductImages).OrderByDescending(p => p.TimePost).Where(p => p.UserId == id && p.PostProductStatus == "DA_AN").ToListAsync();
             return quanLyTinVM;
         }

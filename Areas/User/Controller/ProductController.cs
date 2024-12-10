@@ -64,6 +64,7 @@ namespace ChodoidoUTE.Area.User
 
             // Thêm sản phẩm vào database
             _context.Products.Add(product);
+            user.LuotDang -= 1;
             await _context.SaveChangesAsync();
 
             // Lưu file ảnh
