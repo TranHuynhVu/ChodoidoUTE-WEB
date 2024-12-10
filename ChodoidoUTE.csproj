@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.10.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
@@ -29,7 +28,6 @@
 	<Folder Include="Areas\User\Controller\" />
     <Folder Include="Areas\User\Views\Shared\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Api\" />
     <Folder Include="wwwroot\css\Admin\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

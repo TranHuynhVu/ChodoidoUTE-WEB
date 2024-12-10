@@ -1,5 +1,10 @@
 ﻿@inject ChodoidoUTE.Services.Interface.ICategory _category;
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<AppUser> userManager;
+@inject SignInManager<AppUser> signManager;
 @{
+    var user = await userManager.GetUserAsync(User);
     var categories = await _category.GetCategories();
 }
 <style>
@@ -103,6 +108,13 @@
 
 <div class="container">
     <!-- Form -->
+    <div class="post-credits-section bg-light p-3 rounded text-center">
+        <p id="post-credits" class="mb-0">
+            <span class="text-primary font-weight-bold">Số lượt đăng tin còn lại:</span>
+            <span id="post-count" class="text-success">@user.LuotDang</span>
+        </p>
+    </div>
+
     <form action="/user/product/create" method="post" id="createTinForm" enctype="multipart/form-data">
         <!-- Hình ảnh và Video -->
         <div class="form-section">
@@ -149,7 +161,7 @@
         </div>
         <!-- Nút Submit -->
         <div class="text-center">
-            <button type="submit" class="btn-submit">Đăng Tin</button>
+            <button type="submit" id="createTinForm" class="btn-submit">Đăng Tin</button>
         </div>
     </form>
 
@@ -252,6 +264,18 @@
     });
 
 </script>
+<script>
+    document.getElementById('createTinForm').addEventListener('submit', function (event) {
+        const luotDangElement = document.getElementById('post-count');
+        const luotDang = parseInt(luotDangElement.textContent);
+
+        if (isNaN(luotDang) || luotDang <= 0) {
+            event.preventDefault(); // Ngăn không cho gửi form
+            alert('Bạn không có lượt đăng tin nào. Vui lòng đổi điểm để đăng tin!');
+        }
+    });
+</script>
+
 @* @section Scripts {
     <script>
         $('#createTinForm').on('submit', function (event) {

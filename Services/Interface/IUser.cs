@@ -6,5 +6,7 @@ namespace ChodoidoUTE.Services.Interface
     {
         Task<List<ItemProductVM>> GetYeuThichByUserId(string id);
         Task<int> GetCountYeuThichByUserId(string id);
+
+        Task<List<DanhGiaVM>> GetDanhGiaById(string id);
     }
 }
