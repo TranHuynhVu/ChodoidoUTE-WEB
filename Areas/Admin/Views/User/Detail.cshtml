@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Thông tin chi tiết tài khoản";
+    var user = ViewBag.User as ChodoidoUTE.Models.AppUser;
+}
+<div class="container-fluid mt-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-2 text-gray-800">Thông tin chi tiết tài khoản</h1>
+    </div>
+    <p class="mb-4">
+        Thông tin chi tiết tài khoản
+    </p>
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(@user.ImgUrl))
+                    {
+                        <img class="img-profile rounded-circle" src="@user.ImgUrl" style="width:350px" />
+                    }
+                    else
+                    {
+                        <img class="img-profile rounded-circle" src="/admin/images/undraw_profile@(user.Gender == true ? "" : "_3").svg" />
+                    }
+                    <h4 class="card-title mt-3">@user.Name</h4>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <small class="text-muted">Email</small>
+                    <h6>@user.Email</h6>
+                    <small class="text-muted p-t-30 db">Số điện thoại</small>
+                    <h6>@(user.PhoneNumber ?? "Chưa có số điện thoại")</h6>
+                    <small class="text-muted p-t-30 db">Địa chỉ</small>
+                    <h6>@(user.Address ?? "Chưa có địa chỉ")l</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Column end -->
+        <!-- Column start -->
+        <div class="col-lg-8 col-xlg-9 col-md-7 mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material">
+                        <div class="form-group">
+                            <label class="col-md-12">Id Tài khoản</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@user.Id" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Họ và tên</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@user.Name" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Tên đăng nhập</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@user.UserName" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Tình trạng tài khoản</label>
+                            <div class="col-md-12">
+                                <input class="form-control form-control-line" type="text" value="@(user.Status switch
+                                {
+                                    0 => "Chờ xử lý",
+                                    1 => "Đã duyệt tài khoản",
+                                    -1 => "Đã khóa tài khoản",
+                                    _ => "Không xác định"
+                                })" readonly /> 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column end -->
+    </div>
+</div>

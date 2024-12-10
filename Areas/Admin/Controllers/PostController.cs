@@ -38,6 +38,7 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
         }
 
         [Route("admin/post/approve/{id}")]
+        [HttpPatch]
         public async Task<IActionResult> ApprovePost(int id)
         {
             var post = await _context.Products.FindAsync(id);
@@ -59,6 +60,7 @@ namespace ChodoidoUTE.Areas.Admin.Controllers
 
         }
         [Route("admin/post/deny/{id}")]
+        [HttpPatch]
         public async Task<IActionResult> DenyPost(int id)
         {
             var post = await _context.Products.FindAsync(id);
